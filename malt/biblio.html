@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<meta>
+		<meta charset="utf-8">
+		<title>malt - notes</title>
+
+		<!-- JQuery -->
+		<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+		<!-- Some google fonts -->
+ 		<link href='//fonts.googleapis.com/css?family=Corben:700' rel='stylesheet' type='text/css'/> 
+		<link href="//fonts.googleapis.com/css?family=Maven+Pro:400,500,700,900" rel="stylesheet" type="text/css"/>
+ 		<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/> 
+		<!-- bootstrap for carousel --> 
+		<link href='bower_components/bootstrap/dist/css/bootstrap.min.css' rel='stylesheet' type='text/css'/>
+		<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<!-- Menu & style -->
+		<script type="text/javascript" src="js/menu.js"></script>
+		<!-- bibtex -->
+		<script type="text/javascript" src="bower_components/bibtex-js/src/bibtex_js.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css"/>
+		<link rel="icon" type="image/png" href="images/ico.png">
+	</meta>
+	<body>
+		<div class="navbar">
+			<div>
+				<h1 class='title'>MALT</h1>
+				<ul class='nav'></ul>
+			</div>
+		</div>
+		
+		<div class='feature-image'>	
+			<!-- From http://www.icone-png.com/site-web/prise-note/ -->
+			<img src='images/notes-logo.png' style="margin-top:30px;margin-bottom:30px;height:180px;"/>
+		</div>
+		
+		<div class="note">
+			<h3>Papers</h3>
+			<p class='meta'>By Sébastien Valat - Feb 05, 2018</p>
+			<p>Here some pointers to papers realated to our work:</p>
+			
+			<div class="bibtex_structure">
+				<div class="group year" extra="ASC number">
+					<div style="padding-bottom:10px;"></div>
+					<div class="sort journal" extra="DESC string">
+						<div class="templates"></div>
+					</div>
+				</div>
+			</div>
+
+			
+			<div id="bibtex_display">
+			
+			<div class="if bibtex_template" style="display: none;">
+				<ul> <li>
+				<span class="if journal !nolink">
+					<a class="bibtexVar" href="+URL+" extra="URL">
+						<span style="text-decoration: underline;" class="title"></span>,
+					</a>
+				</span>
+				<span class="if title nolink">
+						<span class="title"></span>,
+				</span>
+				<div class="if author">
+					<span class="author"></span>
+				</div>
+				<div>
+					<span class="if journal"><em><span class="journal"></span></em>,</span>
+					<span class="if booktitle">In <em><span class="booktitle"></span></em>,</span>
+					<span class="if editor"><span class="editor"></span> (editors),</span>
+					<span class="if publisher"><em><span class="publisher"></span></em>,</span>
+					<span class="if !journal number">Technical report <span class="number"></span>,</span>
+					<span class="if institution"><span class="institution"></span>,</span>
+					<span class="if address"><span class="address"></span>,</span>
+					<span class="if volume"><span class="volume"></span>,</span>
+					<span class="if journal number">(<span class="number"></span>),</span>
+					<span class="if pages"> pages <span class="pages"></span>,</span>
+					<span class="if month"><span class="month"></span>,</span>
+					<span class="if year"><span class="year"></span>.</span>
+					<span class="if note"><span class="note"></span>.</span>
+					<a class="bibtexVar" role="button" data-toggle="collapse" href="#bib+BIBTEXKEY+" aria-expanded="false" aria-controls="bib+BIBTEXKEY+" extra="BIBTEXKEY">
+					[bib]
+					</a>
+				</div>
+				<div class="bibtexVar collapse" id="bib+BIBTEXKEY+" extra="BIBTEXKEY">
+					<div class="well">
+						<pre><span class="bibtexraw noread"></span></pre>
+					</div>
+				</div>
+				<div style="display:none"><span class="bibtextype"></span></div>
+				</li></ul>
+			</div>
+			
+			</div>
+			<ul>
+				<div id="bibtex_display"></div>
+			</ul>
+			<bibtex src="biblio.bib"></bibtex>
+		</div>
+		
+		<div class='footer'>
+			<div>
+				Copyright © 2015 MALT. All right reserved. 
+				<!--Theme from <a href='http://indico-software.org/'>Indico website</a>-->
+			</div>
+			<div>
+				<a href='http://www.github.com/memtt/malt' class="no-decoration">
+					<i class="fa fa-github fa-lg"></i>
+				</a>
+			</div>
+		</div>
+	</body>
+</html>
