@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	//define
 	var menuEntries = [
+		{title: 'GitHub', url: 'https://www.github.com/memtt'},
 		{title: 'MALT', url: 'malt/index.html'},
 		{title: 'NUMAPROF',url: 'numaprof/index.html'},
 	];
