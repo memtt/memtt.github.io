@@ -16,9 +16,24 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="loupe.svg">
+   sodipodi:docname="loupe.svg"
+   inkscape:export-filename="/home/svalat/Projects/memtt/images/loupe.png"
+   inkscape:export-xdpi="299.94867"
+   inkscape:export-ydpi="299.94867">
   <defs
      id="defs4">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient4238">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop4240" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:0;"
+         offset="1"
+         id="stop4242" />
+    </linearGradient>
     <linearGradient
        inkscape:collect="always"
        id="loupe">
@@ -358,6 +373,17 @@
          stdDeviation="5.5593299"
          id="feGaussianBlur6243" />
     </filter>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4238"
+       id="radialGradient4244"
+       cx="433.42386"
+       cy="411.85306"
+       fx="433.42386"
+       fy="411.85306"
+       r="91.026657"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.97220503,-0.00529535,0.0054008,0.99156574,12.146755,8.0928864)" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -366,9 +392,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.2908307"
-     inkscape:cx="357.25444"
-     inkscape:cy="252.78946"
+     inkscape:zoom="1.8255103"
+     inkscape:cx="274.44058"
+     inkscape:cy="299.50606"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -391,7 +417,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -705,5 +731,11 @@
          d="m 482.87867,744.50303 a 114.21464,118.87087 0 0 0 -113.5,106.00586 144.89099,145.16489 0 0 1 130.20703,-81.90235 144.89099,145.16489 0 0 1 70.86133,18.62695 114.21464,118.87087 0 0 0 -87.56836,-42.73046 z"
          style="opacity:0.722;fill:#eef6ff;fill-opacity:0.89864861;stroke:none;stroke-width:1.10000002;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.3006757" />
     </g>
+    <circle
+       style="opacity:0.344;fill:url(#radialGradient4244);fill-opacity:1;stroke:none;stroke-width:1.10000002;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.3006757"
+       id="path4236"
+       cx="435.74796"
+       cy="414.17715"
+       r="91.026657" />
   </g>
 </svg>
