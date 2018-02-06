@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+	<meta>
+		<meta charset="utf-8">
+		<title>malt</title>
+
+		<!-- JQuery -->
+		<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+		<!-- Some google fonts -->
+ 		<link href='//fonts.googleapis.com/css?family=Corben:700' rel='stylesheet' type='text/css'/> 
+		<link href="//fonts.googleapis.com/css?family=Maven+Pro:400,500,700,900" rel="stylesheet" type="text/css"/>
+ 		<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/> 
+		<!-- bootstrap for carousel --> 
+		<link href='bower_components/bootstrap/dist/css/bootstrap.min.css' rel='stylesheet' type='text/css'/>
+		<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<!-- Menu & style -->
+		<script type="text/javascript" src="js/menu.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css"/>
+		<link rel="icon" type="image/png" href="images/ico.png">
+	</meta>
+	<body>
+		<div class="navbar">
+			<div>
+				<h1 class='title'>MALT</h1>
+				<ul class='nav'></ul>
+			</div>
+		</div>
+		<div class='index-header'>
+			<div class='subtitle'>A memory profiling tool to track malloc</div>
+			<div class='subtitle-underline'></div>
+			<div class='summary'>
+				Find where you allocate your memory and how, reduce the memory footprint of your
+				applications and limit overhead of memory management.
+			</div>
+			<div class='downloads'>
+				<div class='source'><a href='https://github.com/memtt/malt/archive/v0.3.0.tar.gz'>Source - 0.3.0</a></div>
+				<div class='others'>
+					<!--<a href='TODO'>Fedora .rpm</a> |
+					<a href='TODO'>Debian .deb</a> |-->
+					<a href='https://github.com/memtt/malt/releases'>Others</a>
+				</div>
+				<a href='http://www.github.com/memtt/malt'><img src='images/logos/github-1.svg' width="50px"/></a>
+			</div>
+			<div class="index-screenshot">
+				<span/>
+			</div>
+		</div>
+		<div class='index-intro'>
+			<p>
+				MALT is a memory profiling tool used to find where you allocate your memory and how. It helps in using the same approach as valgrind / kcachgrind for performance, but, to reduce your memory footprint and performance impact of memory management. 
+			</p>
+			<p>
+				It is the first published version. Of course there are plenty of things to fix. Thank you for your understanding and to report bugs. Feel free to contribute to improve it.
+			</p>
+		</div>
+		<div class='colored-section'>
+			<h2>Features</h2>
+			<div class='feature-circles'>
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/code-annotation.png"/>
+					</div>
+					<h4>Code annotation</h4>
+					<p>MALT provides code annotations to map allocation metrics directly onto your source code. It also uses human readable	units (KB, GB...).</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/over-threads.png"/>
+					</div>
+					<h4>Thread statistics</h4>
+					<p>You get some statistics about usage of memory functions over threads.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/over-time.png"/>
+					</div>
+					<h4>Time profiles</h4>
+					<p>It provides some metrics over time, like the number of allocation, allocation rates,	usage of virtual, physical and requested memory. </p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/global-variables.png"/>
+					</div>
+					<h4>Track global variables</h4>
+					<p>In some applications (e.g. in FORTRAN), global variables or TLS can use a large amount of memory. MALT also tracks them for all linked libraries</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/alloc-properties.png"/>
+					</div>
+					<h4>Allocation properties</h4>
+					<p>In addition to memory size MALT also	give you some allocation properties, like :	minimal, mean and maximal lifetime of chunks linked to call sites.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/call-stack.png"/>
+					</div>
+					<h4>Call stacks</h4>
+					<p>Memory allocations are mapped onto call stacks and call sites.</p>
+				</div>
+				
+				<div class="link-to-details-fatures">
+					You can get a more complete list of features on <a href='features.html'>this page</a>
+				</div>
+			</div>
+		</div>
+		<div class='white-section'>
+			<div class="left-right-features">
+				<div class="entry">
+					<div>
+						<img src="images/malt-wrapping.svg"></img>
+					</div>
+					<div>
+						MALT instrument you program by wrapping the malloc (and free, calloc...) thanks to Unix symbol overriding through usage of LD_PRELOAD. Additionally, it uses backtrace() to reconstruct the call stack on each call to memory functions.
+					</div>
+				</div>
+				
+				<div class="entry">
+					<div>
+						MALT provides a web GUI based on new technologies like NodeJS, AngularJS, D3JS. Thanks to this it might be easier	for you to run MALT on a remote node by forwarding the connection via SSH.
+					</div>
+					<div>
+						<a target="_blank" href="https://nodejs.org/"><img width="180px" src='images/logos/nodejs-logo.png'></a><br/>
+						<a target="_blank"  href="https://angularjs.org/"><img width="220px" src='images/logos/AngularJS-large.png'></a><br/>
+						<a target="_blank"  href="http://d3js.org/"><img width="280px" src='images/logos/D3.js-Logo.png'></a>
+					</div>
+				</div>
+
+				<div class="entry">
+					<div>
+						<pre class="terminal">malt ./my_program
+
+malt-webview \
+	-i ./malt-my_program-1588.json
+
+browser http://localhost:8080</pre>
+					</div>
+					<div>
+						MALT is used by running the profiling tool on your command just as you do with valgrind. Then, open the profile file with the MALT webserver and connect to it with your browser by using http://localhost:8080.
+					</div>
+				</div>
+	<!-- 		</div> -->
+
+	<!-- 		<div class="divbg"> -->
+				<div class="how">
+					<div class="entry">
+						<div>
+							MALT is now OpenSource on GitHub and was developed in 2014 at Exascale Computing Lab in the Maqao team. This laboratory	is a joined effort from CEA, Genci, Intel and UVSQ for HPC. Thanks to all of them.
+						</div>
+						<div>
+							<a target="_blank"  href="https://www.exascale-computing.eu/"><img width="260px" src='images/logos/Logo-Exascale.gif'></a><br/>
+							<a target="_blank"  href="http://www.cea.fr/"><img width="70px" src='images/logos/logo-cea.png'></a>
+							<a target="_blank"  href="http://www.genci.fr/"><img width="220px" src='images/logos/logo-genci.png'></a><br/>
+							<a target="_blank"  href="http://www.intel.fr/"><img width="70px" src='images/logos/logo-intel.png'></a>
+							<a target="_blank"  href="http://www.uvsq.fr/"><img width="220px" src='images/logos/logo-uvsq.png'></a><br/>
+							<a target="_blank"  href="http://www.maqao.org/"><img width="260px" src='images/logos/maqao.png'></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class='footer'>
+			<div>
+				Copyright © 2015 MALT. All right reserved. 
+				<!--Theme from <a href='http://indico-software.org/'>Indico website</a>-->
+			</div>
+			<div>
+				<a href='http://www.github.com/memtt/malt' class="no-decoration">
+					<i class="fa fa-github fa-lg"></i>
+				</a>
+			</div>
+		</div>
+	</body>
+</html>

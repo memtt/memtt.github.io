@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+	<meta>
+		<meta charset="utf-8">
+		<title>malt - contribution</title>
+
+		<!-- JQuery -->
+		<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+		<!-- Some google fonts -->
+ 		<link href='//fonts.googleapis.com/css?family=Corben:700' rel='stylesheet' type='text/css'/> 
+		<link href="//fonts.googleapis.com/css?family=Maven+Pro:400,500,700,900" rel="stylesheet" type="text/css"/>
+ 		<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/> 
+		<!-- bootstrap for carousel --> 
+		<link href='bower_components/bootstrap/dist/css/bootstrap.min.css' rel='stylesheet' type='text/css'/>
+		<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<!-- Menu & style -->
+		<script type="text/javascript" src="js/menu.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css"/>
+		<link rel="icon" type="image/png" href="images/ico.png">
+	</meta>
+	<body>
+		<div class="navbar">
+			<div>
+				<h1 class='title'>MALT</h1>
+				<ul class='nav'></ul>
+			</div>
+		</div>
+		
+		<div class="contrib-description">
+			<p>
+			I currently provide a first version of MALT, and, of course, I have some ideas on what to 
+			improve but don't have the time to do it myself now. If you are interested to contribute 
+			you can find here some starting points which might motivate you. I will be pleased to 
+			provide help, answer questions, detailed ideas, code reviews and to merge your great 
+			stuff. Be also welcome to provide your own ideas.
+			</p>
+<!-- 			<p>You can join <a href=''>slack</a> to discuss.</p> -->
+			<p>You can look on the <a href='https://www.github.com/memtt/malt'>GitHub repository</a>.</p>
+		</div>
+		
+		<div class="colored-section">
+			<h2>In the GUI</h2>
+			<div class="feature-circles">
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/angular-cleanup.svg"/>
+					</div>
+					<h4>Angular cleanup</h4>
+					<p>I'm not an Angular expert so there is room for improvement on this topic in the web code.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/chart-export.svg"/>
+					</div>
+					<h4>Export on all charts</h4>
+					<p>Currently not all charts support export functions.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/main-look-and-feel.svg"/>
+					</div>
+					<h4>Better look and feel for main page</h4>
+					<p>The main page of MALT provides global statistics on your execution. It might be cool to get a list view with some logos for each metric instead of the current flat table.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/improve-help.svg"/>
+					</div>
+					<h4>Improve help</h4>
+					<p>Ideally, I wanted to get documentation of all the features provided by the interface linked to some simple example of bad pattern it helps to detect.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/kcachegrind.png"/>
+					</div>
+					<h4>KCachgrind improvement</h4>
+					<p>Will be interesting to patch kcachgrind to use human readable units (KB, GB...) and also to support metrics with min/max inclusive functions instead of the sum. So we can use all MALT metrics in it.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/reduce-class.svg"/>
+					</div>
+					<h4>Reduce on class/libraries</h4>
+					<p>In source view the allocation metrics are reduced on functions, but, it can also (as kcachgrind to it well) reduce them on binary objects and classes.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/translate.svg"/>
+					</div>
+					<h4>Translantion</h4>
+					<p>Could be really cool to get translations for the GUI and command-line tool.</p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="white-section">
+			<h2>Trace file</h2>
+			<div class="feature-circles">
+				<p>The trace file feature is not aimed to be enabled by default due to overhead and IO issues on big parallel applications. But it can help to go deeper in analysis when you find interesting spots. In the GUI it might appear as "deeper analysis" buttons on some elements to extract some content on demand from the trace file if available.</p>
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/trace.svg"/>
+					</div>
+					<h4>Add view in the GUI</h4>
+					<p>The backend can generate some trace file but the data is not shown in the current GUI.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/1441243914_Defragmentation.png"/>
+					</div>
+					<h4>Fragmentation</h4>
+					<p>The command line trace analysis tool can export some information about fragmentation by comparing two time-points. Might be interesting to get access to it in the GUI.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/details-at-time.svg"/>
+					</div>
+					<h4>What is allocated on timestemp</h4>
+					<p>In the GUI, on time charts, I wanted to be able to click on the chart to get the list of allocations which fill the memory at this point. The data are mostly already available.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/time-chart-call-site.svg"/>
+					</div>
+					<h4>Time charts on call site</h4>
+					<p>Thanks to trace we can provide detailed time charts when clicking on a specific call site.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/metric-distr-on-call-site.svg"/>
+					</div>
+					<h4>Metric distribution on call site</h4>
+					<p>Thanks to trace we can provide a more detailed distribution chart of some metrics to view properties of call site allocations.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/scatter.svg"/>
+					</div>
+					<h4>Scatter plot f(size,lifetime)</h4>
+					<p>This is interesting to observe for some applications. We can extract some bad pattern quickly with this. Can only be done with trace as we might need to build a plot with millions of points.</p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="colored-section">
+			<h2>Backend</h2>
+			<div class="feature-circles">
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/move-out.svg"/>
+					</div>
+					<h4>Move out valgrind compatibility</h4>
+					<p>It might be cleaner to generate the callgrind files from the json one instead of doing it into the backend itself. It removes some unneeded constrains on internal stack representation.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/numa.svg"/>
+					</div>
+					<h4>NUMA, physical/virtual</h4>
+					<p>Will be interesting to play with move_page() function on Linux to get NUMA and physical/virtual ratio on large segments at free time.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/dwarf.svg"/>
+					</div>
+					<h4>use of libdwarf</h4>
+					<p>Currently MALT use addr2line to match the call site address to source code. It might be better for performance to use directly libdwarf.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/multi-process.svg"/>
+					</div>
+					<h4>Multi-process summary</h4>
+					<p>In case you run a multi-process application like MPI, might be interesting to build a summary file with global statistics and export it in the webview with links to jump from one process to another.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/fault.svg"/>
+					</div>
+					<h4>Hints about page fault costs</h4>
+					<p>When you allocate a large segment most of the cost comes from page faults to fill it. Provide some estimation of the cost.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/mmap.svg"/>
+					</div>
+					<h4>mmap profiles</h4>
+					<p>Currently MALT ignores mmap, there is the wrapping function but it requires to distinguish indirect call by malloc from user one and MALT one.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/todo.svg"/>
+					</div>
+					<h4>Memory accesses</h4>
+					<p>Splitting the execution time in time slots we can use mprotect() to give an idea on dynamic memory size in use (accessed) over time.</p>
+				</div>
+				
+					<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/todo.svg"/>
+					</div>
+					<h4>Unused before free</h4>
+					<p>Track time of last access before free, notify if too long compared to lifetime.</p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="white-section">
+			<h2>Use backend V2</h2>
+			<div class="feature-circles">
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/v2.svg"/>
+					</div>
+					<h4>What is V2</h4>
+					<p>I already completely rewrite a new version (see branch v2 in git) of the backend to make the code clean. It produces smaller and cleaner json file. Can also be extended to other metrics more easily.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/v2-bug.svg"/>
+					</div>
+					<h4>Still segfaults</h4>
+					<p>In current state I still get a segfault maybe due to a bug in the internal allocator if someone wants to search for it.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/update-gui.svg"/>
+					</div>
+					<h4>Need to port the GUI</h4>
+					<p>The stack modeling is changed with this version and requires to port the GUI to take this in account. It might make the thing easier in the GUI code but require some work.</p>
+				</div>
+
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/improve-help.svg"/>
+					</div>
+					<h4>Documentation</h4>
+					<p>The backend V2 is more abstract and can be reused for other kind of analysis. It will be good to have a proper documentation on how to proceed.</p>
+				</div>
+
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/todo.svg"/>
+					</div>
+					<h4>Offload to thread</h4>
+					<p>Could be interesting to try to offload the status updating to another thread to 
+					not slow down the current one.</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="colored-section">
+			<h2>Integration with other tools</h2>
+			<div class="feature-circles">
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/todo.svg"/>
+					</div>
+					<h4>Valgrind</h4>
+					<div>In some cases, the backtrace approach is really slow, so it could be interesting to be integrated also as a valgrind tool.</div>
+				</div>
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/todo.svg"/>
+					</div>
+					<h4>Pintool / Maqao</h4>
+					<div>There are already some preliminary examples to integrate binary instrumentation tools but it needs some work to become usable. </div>
+				</div>
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/todo.svg"/>
+					</div>
+					<h4>Curses GUI</h4>
+					<p>Could be interesting to also get a curses GUI in NodeJS.</p>
+				</div>
+			</div>
+		</div>
+		
+		<div class='footer'>
+			<div>
+				Copyright © 2015 MALT. All right reserved. 
+				<!--Theme from <a href='http://indico-software.org/'>Indico website</a>-->
+			</div> 
+			<div>
+				<a href='http://www.github.com/memtt/malt' class="no-decoration">
+					<i class="fa fa-github fa-lg"></i>
+				</a>
+			</div>
+		</div>
+	</body>
+</html>

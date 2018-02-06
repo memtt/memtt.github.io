@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+	<meta>
+		<meta charset="utf-8">
+		<title>numaprof - features</title>
+
+		<!-- JQuery -->
+		<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+		<!-- Some google fonts -->
+ 		<link href='//fonts.googleapis.com/css?family=Corben:700' rel='stylesheet' type='text/css'/> 
+		<link href="//fonts.googleapis.com/css?family=Maven+Pro:400,500,700,900" rel="stylesheet" type="text/css"/>
+ 		<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/> 
+		<!-- bootstrap for carousel --> 
+		<link href='bower_components/bootstrap/dist/css/bootstrap.min.css' rel='stylesheet' type='text/css'/>
+		<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<!-- Menu & style -->
+		<script type="text/javascript" src="js/menu.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css"/>
+		<link rel="icon" type="image/png" href="images/ico.png">
+	</meta>
+	<body>
+		<div class="navbar">
+			<div>
+				<h1 class='title'>NUMAPROF</h1>
+				<ul class='nav'></ul>
+			</div>
+		</div>
+		<div class='index-header feature-index'>
+			<div class='feature-image'>	
+				<img src='images/toolset.png' style="height:180px;"/>
+				<!-- http://fr.all-free-download.com/gratuit-icone/icones/outil_multi_37703.html -->
+			</div>
+		</div>
+		
+		<div class="white-section">
+			<h2>What to explore with NUMAPROF</h2>
+			<div class='feature-circles'>
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/code-annot.png"/>
+					</div>
+					<h4>Code annotation</h4>
+					<p>NUMAPROF provides code annotations to map allocation metrics directly onto your source code.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/threads-statistics.png"/>
+					</div>
+					<h4>Thread statistics</h4>
+					<p>You get some statistics about memory accesses over threads.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/thread-details.png"/>
+					</div>
+					<h4>Thread pinning history</h4>
+					<p>Track all the thread pinning history and statistics to better understand your profile.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/access-matrix.png"/>
+					</div>
+					<h4>Access matrix</h4>
+					<p>Profide a global and per thread access matrix to better understand the global balancing over your nodes.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/alloc-site.png"/>
+					</div>
+					<h4>Report on allocation site</h4>
+					<p>Report remote/local accesses on access site and on allocation site to quickly find segments generating remote acceses.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/per-line-details.png"/>
+					</div>
+					<h4>Per-line details</h4>
+					<p>When you put your mouse on access line you get all the details on this line with charts.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/annot-asm.png"/>
+					</div>
+					<h4>Assembly annotation</h4>
+					<p>In addition to the source code annotation NUMAPROF annotate the assembly code to understand accesses at fine grain.</p>
+				</div>
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/mcdram.png"/>
+					</div>
+					<h4>KNL MCDRAM</h4>
+					<p>NUMAPROF provide a special instrumentation to track Intel KNL MCDRAM accesses.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/pinning.svg"/>
+					</div>
+					<h4>Track thread and page pinning</h4>
+					<p>NUMAPROF track pinning of threads and pages to detect unpinned (undefined) behavior which can be improved.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/kcachegrind.png"/>
+					</div>
+					<h4>Kcachegrind</h4>
+					<p>NUMAPROF can convert is native output format to callgrind compatible format.</p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="colored-section">
+			<h2>About NUMAPROF</h2>
+			<div class="feature-circles">
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/web-based.svg"/>
+					</div>
+					<h4>Web-based GUI</h4>
+					<p>NUMAPROF uses a web-based GUI hosted by an embedded server in python. The GUI uses JS libraries like JQuery and D3JS.</p>
+				</div>
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/json.svg"/>
+					</div>
+					<h4>JSON based format</h4>
+					<p>NUMAPROF uses a JSON file format, so might be reused without too much effort by other software. The drawback is that it produces bigger files.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/1441243914_Defragmentation.png"/>
+					</div>
+					<h4>Ignore local stack</h4>
+					<p>To get faster NUMAPROF do no instrument the local stack accesses, this largely reduce the overhead.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/first-touch.svg"/>
+					</div>
+					<h4>Track first touch</h4>
+					<p>NUMAPROF track the first touch which determines the page location and report the in the profile.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/multi-thread.svg"/>
+					</div>
+					<h4>Native parallel execution</h4>
+					<p>Unlike valgrind and thanks to pintool, NUMAPROF is parallel and only be slow down by the binary instrumentation.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/40x.png"/>
+					</div>
+					<h4>40x overhead</h4>
+					<p>The typical overhead of NUMAPROF is 40x depending on how much you access your stack or heap.</p>
+				</div>
+		</div>
+		
+		<!--<div class="features-container">
+			<div class="features">
+				<h3>For MALT developpers</h3>
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/code-annotation.png"/>
+					</div>
+					<h4>Unit testing</h4>
+					<p>I love unit test approach so MALT backend is unit-tested with Gtest.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/over-threads.png"/>
+					</div>
+					<h4></h4>
+					<p>You can get statistics about usage of memory
+					functions over threads.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/over-time.png"/>
+					</div>
+					<h4>Time profiles</h4>
+					<p>MALT provides some metrics over time, like number of allocation, allocation rates,
+					usage of virtual, physical and requested memory. </p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/global-variables.png"/>
+					</div>
+					<h4>Track global variables</h4>
+					<p>On some applications (eg. fortran) global variable
+					or TLS can use a large amount of memory. MALT also track them
+					for all linked libraries.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/alloc-properties.png"/>
+					</div>
+					<h4>Allocation properties</h4>
+					<p>In addition to memory size MALT also
+					give you some allocation properties like
+					minimal and maximal lifetime of chunks linked to callsites.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/call-stack.png"/>
+					</div>
+					<h4>Call stacks</h4>
+					<p>Memory allocation are also projected to call stacks.</p>
+				</div>
+		</div>-->
+		
+		</div>
+		<div class='footer'>
+			<div>
+				Copyright © 2018 NUMAPROF. 
+				<!--All right reserved. Theme from <a href='http://indico-software.org/'>Indico website</a>-->
+			</div>
+			<div>
+				<a href='http://www.github.com/memtt/numaprof' class="no-decoration">
+					<i class="fa fa-github fa-lg"></i>
+				</a>
+			</div>
+		</div>
+	</body>
+</html>

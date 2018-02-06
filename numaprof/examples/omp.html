@@ -1,0 +1,87 @@
+<html>
+	<body>
+		<div class="note">
+			<h3>Basic OpenMP example</h3>
+			<p class='meta'>By Sébastien Valat - Jan 7, 2018</p>
+			<p>To better understand the usage of the tool we can look on a really simple example with OpenMP : <p>
+			
+			<pre class="terminal" style='width:100%'>
+#include &lt;cstdlib&gt;
+
+#define SIZE (200*1024*1024/sizeof(float))
+#define REPEAT 100
+
+int main(void)
+{
+	float * buffer = new float[SIZE];
+
+	//do first touch from the main thread
+	for (size_t i = 0 ; i &lt; SIZE ; i++)
+		buffer[i] = i;
+
+	//now do access in threads
+	for (int i = 0 ; i &lt; REPEAT ; i++)
+	{
+		#pragma omp parallel for
+		for (size_t i = 0 ; i &lt; SIZE ; i++)
+			buffer[i]++;
+	}
+
+	delete [] buffer;
+	
+	return 0;
+}</pre>
+			
+			<p>Run it on a NUMA server</p>
+			
+			<pre class="terminal" style='width:100%'>
+g++ -g -fopenmp omp-loop.cpp -o omp-loop
+numaprof ./omp-loop
+numaprof-webview ./numaprof-omp-loop-3585.json</pre>
+
+			<p>You will notice directly on the main page that all the
+			accesses are marked as unpinned both (meaning that the threads and the pages are not fixed) : </p>
+			
+			<center><img src='images/examples/omp-loop-1.png'/></center>
+
+			 <p>This is because by default OpenMP don't try to bind the threads to a specific core so they are moving everywhere on the machine. To avoid this you can ask OpenMP to bind the threads via the option (since OpenMP 4.5) OMP_PROC_BIND or if you are using ICC, use KMP_AFFINITY.
+			
+			<pre class="terminal" style='width:100%'>
+OMP_PROC_BIND=TRUE numaprof ./omp-loop</pre>
+
+			<p>Now You see that you get local accesses but still a lot more remote accesses</p>
+			
+			<center><img src='images/examples/omp-loop-2.png'/></center>
+			
+			<p>We can now move to the source code annotations to find the source. Select the <i>remote access</i> metric :<img src='images/examples/omp-loop-3.png'/> <br/>You then find that all the remote accesses come from the omp parallel for loop.</p>
+			
+			<center><img src='images/examples/omp-loop-4.png'/></center>
+			
+			<p>We can then search the allocation site of these remote accesses by using the <i>alloc remote access</i>. You will find the buffer allocation.</i>
+			
+			<p>We can finally found where the memory has been first touched and pinned by using the <i>first touch</i> metric. You will find the first for loop which init the segment : </p>
+			
+			<center><img src='images/examples/omp-loop-5.png'/></center>
+			
+			<p>This append because the initialization if fully done by the initial thread so all the segment has been mapped on the related NUMA node. To optimize the code we need to also make this initialization in parallel. We can conform this by looking on the thread details seeing that thread 0 make all the first touch :</p> 
+			
+			<center><img src='images/examples/omp-loop-6.png'/></center>
+			
+			<p>modify the code by adding a pragma omp parallel for on this loop :</p>
+			
+			<pre class="terminal" style='width:100%'>
+//do first touch from main thread
+#pragma omp parallel for
+for (size_t i = 0 ; i < SIZE ; i++)
+	buffer[i] = i;</pre>
+	
+			<p>Run again NUMAPROF, you will now see mostly local accesses. We still observe some imperfections which are due to the huge pages (2 MB) which do not permit the kernel to match the page mapping with our code at a 4 KB page granularity so there is some overlap between the threads.</p>
+		
+			<center><img src='images/examples/omp-loop-7.png'/></center>
+			
+			<p>And now the access matric is mostly diagonal with still some imperfections.</p>
+			
+			<center><img src='images/examples/omp-loop-8.png'/></center>
+		</div>
+	</body>
+</html>

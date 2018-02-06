@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+	<meta>
+		<meta charset="utf-8">
+		<title>malt - features</title>
+
+		<!-- JQuery -->
+		<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+		<!-- Some google fonts -->
+ 		<link href='//fonts.googleapis.com/css?family=Corben:700' rel='stylesheet' type='text/css'/> 
+		<link href="//fonts.googleapis.com/css?family=Maven+Pro:400,500,700,900" rel="stylesheet" type="text/css"/>
+ 		<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/> 
+		<!-- bootstrap for carousel --> 
+		<link href='bower_components/bootstrap/dist/css/bootstrap.min.css' rel='stylesheet' type='text/css'/>
+		<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<!-- Menu & style -->
+		<script type="text/javascript" src="js/menu.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css"/>
+		<link rel="icon" type="image/png" href="images/ico.png">
+	</meta>
+	<body>
+		<div class="navbar">
+			<div>
+				<h1 class='title'>MALT</h1>
+				<ul class='nav'></ul>
+			</div>
+		</div>
+		<div class='index-header feature-index'>
+			<div class='feature-image'>	
+				<img src='images/toolset.png' style="height:180px;"/>
+				<!-- http://fr.all-free-download.com/gratuit-icone/icones/outil_multi_37703.html -->
+			</div>
+		</div>
+		
+		<div class="white-section">
+			<h2>What to explore with MALT</h2>
+			<div class='feature-circles'>
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/code-annotation.png"/>
+					</div>
+					<h4>Code annotation</h4>
+					<p>MALT provides code annotations to map allocation metrics directly onto your source code. It also uses human readable units (KB, GB...).</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/over-threads.png"/>
+					</div>
+					<h4>Thread statistics</h4>
+					<p>You get statistics about usage of memory functions over threads.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/over-time.png"/>
+					</div>
+					<h4>Time profiles</h4>
+					<p>It provides some metrics over time, like : number of allocation, allocation rates,
+					usage of virtual, physical and requested memory. </p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/global-variables.png"/>
+					</div>
+					<h4>Track global variables</h4>
+					<p>In some applications (e.g. FORTRAN) global variables or TLS can use a large amount of memory. MALT also track them for all linked libraries.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/alloc-properties.png"/>
+					</div>
+					<h4>Allocation properties</h4>
+					<p>Additionally to memory size MALT also	give you some allocation properties like minimal and maximal lifetime of chunks linked to call sites.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/call-stack.png"/>
+					</div>
+					<h4>Call stacks</h4>
+					<p>Memory allocations are also projected on call stacks.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/call-tree.svg"/>
+					</div>
+					<h4>Call tree</h4>
+					<p>Similar to KCachgrind call tree chart, MALT annotate the call tree and permit to dig in.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/free-count.png"/>
+					</div>
+					<h4>Also track free</h4>
+					Most memory tools provide information about malloc but not about the free function. MALT also points the call sites using free in the annotated sources.<p>Most memory tools provide information about malloc but not on free. MALT also points the call sites using free in the annotated sources.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/realloc.png"/>
+					</div>
+					<h4>Realloc</h4>
+					<p>You can easily get statistics about sizes used in malloc	but most of the time you don't get the one from realloc. MALT does.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/lifetime.svg"/>
+					</div>
+					<h4>Lifetime</h4>
+					<p>MALT also helps for performance by giving you hint about the lifetime of your allocations.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/peak.png"/>
+					</div>
+					<h4>Memory on peak</h4>
+					<p>The tool provides a complete allocation profile on stacks at peak time. Hence, you can reduce the memory footprint of your app.</p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="colored-section">
+			<h2>Bad patterns you can find with MALT</h2>
+			<div class="feature-circles">
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/leak.svg"/>
+					</div>
+					<h4>Memory leaks</h4>
+					<p>As for valgrind memcheck MALT provide the complete list of non-freed chunks at exit time.</p>
+				</div>
+				<div class="feature">
+					<div class="feature-circle">
+						<!-- From https://www.iconfinder.com/icons/49241/defragmentation_icon#size=128 under CC -->
+						<img src="images/features/1441243914_Defragmentation.png"/>
+					</div>
+					<h4>Fragmentation</h4>
+					<p>Thanks to time profile of virtual vs. requested memory, MALT can spot fragmentation if effect is big. Still need to improve the way to track the origin.</p>
+				</div>
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/unexpected-alloc.svg"/>
+					</div>
+					<h4>Unexpected allocation</h4>
+					<p>MALT can help you to detect allocations you don't expect, for example added by the compiler (in FORTRAN) or libs.</p>
+				</div>
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/Microscope_Icon_256.png"/>
+					</div>
+					<h4>Too small allocation</h4>
+					<p>All apps have tiny allocations (e.g. 1B). MALT can find them easily to check if there is not too much of them.</p>
+				</div>
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/short-lifetime.png"/>
+					</div>
+					<h4>Short life allocations</h4>
+					<p>MALT helps to track short life chunks allocated in short for loops. It helps to the performance of your application.</p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="white-section">
+			<h2>About MALT GUI</h2>
+			<div class="feature-circles">
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/web-based.svg"/>
+					</div>
+					<h4>Web-based GUI</h4>
+					<p>MALT uses a web-based GUI hosted by an embedded server in NodeJS. The GUI uses JS libraries like AngularJS and D3JS.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/kcachegrind.png"/>
+					</div>
+					<h4>KCachegrind compatibility</h4>
+					<p>MALT can generate output files compatible with KCachgrind. It cannot use all the metrics but can be enough for you.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<!-- from http://www.icone-png.com/sciences/statistique/12.php -->
+						<img src="images/features/chart-export.png"/>
+					</div>
+					<h4>Export charts</h4>
+					<p>The web GUI allows to export charts in SVG format or extract the data in JSON or CSV format. Useful for your reports.</p>
+				</div>
+			</div>
+		</div>
+		<div class="colored-section">
+			<h2>About MALT backend</h2>
+			<div class="feature-circles">
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/json.svg"/>
+					</div>
+					<h4>JSON based format</h4>
+					<p>MALT uses a JSON file format, so might be reused without too much effort by other software. The drawback is that it produces bigger files.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/hide.svg"/>
+					</div>
+					<h4>Ignore MALT allocations</h4>
+					<p>MALT takes care to ignore the allocations done by itself in all profiles. It also uses his own allocator not to change the memory layout of your application.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/no-snapshot.svg"/>
+					</div>
+					<h4>No snapshots</h4>
+					<p>We do not use a snapshot approach to contrast with valgrind massif or TCMalloc profiler.
+					Thanks to this we do not miss what append between snapshots.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/profile.svg"/>
+					</div>
+					<h4>Pofile</h4>
+					<p>MALT use a profile approach so map the memory metrics on the call stack or on time with sampling. </p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/trace.svg"/>
+					</div>
+					<h4>Trace</h4>
+					<p>It is not yet in the GUI but MALT backend also optionally provide tracing and an analysis tool to extract some deeper details.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/multi-thread.svg"/>
+					</div>
+					<h4>Native parallel exection</h4>
+					<p>Unlike valgrind MALT is parallel and only be slow down by the backtrace calls. It can get large overhead if you do millions/billions of allocations.</p>
+				</div>
+		</div>
+		
+		<!--<div class="features-container">
+			<div class="features">
+				<h3>For MALT developpers</h3>
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/code-annotation.png"/>
+					</div>
+					<h4>Unit testing</h4>
+					<p>I love unit test approach so MALT backend is unit-tested with Gtest.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/over-threads.png"/>
+					</div>
+					<h4></h4>
+					<p>You can get statistics about usage of memory
+					functions over threads.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/over-time.png"/>
+					</div>
+					<h4>Time profiles</h4>
+					<p>MALT provides some metrics over time, like number of allocation, allocation rates,
+					usage of virtual, physical and requested memory. </p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/global-variables.png"/>
+					</div>
+					<h4>Track global variables</h4>
+					<p>On some applications (eg. fortran) global variable
+					or TLS can use a large amount of memory. MALT also track them
+					for all linked libraries.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/alloc-properties.png"/>
+					</div>
+					<h4>Allocation properties</h4>
+					<p>In addition to memory size MALT also
+					give you some allocation properties like
+					minimal and maximal lifetime of chunks linked to callsites.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/call-stack.png"/>
+					</div>
+					<h4>Call stacks</h4>
+					<p>Memory allocation are also projected to call stacks.</p>
+				</div>
+		</div>-->
+		
+		</div>
+		<div class='footer'>
+			<div>
+				Copyright © 2015 MALT. 
+				<!--All right reserved. Theme from <a href='http://indico-software.org/'>Indico website</a>-->
+			</div>
+			<div>
+				<a href='http://www.github.com/memtt/malt' class="no-decoration">
+					<i class="fa fa-github fa-lg"></i>
+				</a>
+			</div>
+		</div>
+	</body>
+</html>

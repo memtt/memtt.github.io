@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+	<meta>
+		<meta charset="utf-8">
+		<title>numaprof - contribution</title>
+
+		<!-- JQuery -->
+		<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+		<!-- Some google fonts -->
+ 		<link href='//fonts.googleapis.com/css?family=Corben:700' rel='stylesheet' type='text/css'/> 
+		<link href="//fonts.googleapis.com/css?family=Maven+Pro:400,500,700,900" rel="stylesheet" type="text/css"/>
+ 		<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/> 
+		<!-- bootstrap for carousel --> 
+		<link href='bower_components/bootstrap/dist/css/bootstrap.min.css' rel='stylesheet' type='text/css'/>
+		<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<!-- Menu & style -->
+		<script type="text/javascript" src="js/menu.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css"/>
+		<link rel="icon" type="image/png" href="images/ico.png">
+	</meta>
+	<body>
+		<div class="navbar">
+			<div>
+				<h1 class='title'>NUMAPROF</h1>
+				<ul class='nav'></ul>
+			</div>
+		</div>
+		
+		<div class="contrib-description">
+			<p>
+			I currently provide a first version of NUMAPROF, and, of course, I have some ideas on what to 
+			improve but don't have the time to do it myself now. If you are interested to contribute 
+			you can find here some starting points which might motivate you. I will be pleased to 
+			provide help, answer questions, detailed ideas, code reviews and to merge your great 
+			stuff. Be also welcome to provide your own ideas.
+			</p>
+			<p>You can join by looking on the <a href='http://www.github.com/memtt/numaprof'><img src='images/logos/github-1.svg' width="35px"/> Github</a> repositoy.</p>
+			<!--<p>You can join <a href=''><img src='images/logos/slack.png' width='20px'/> slack</a> to discuss and look on the <a href='http://www.github.com/memtt/numaprof'><img src='images/logos/github-1.svg' width="35px"/> Github</a> repositoy.</p>-->
+		</div>
+		
+		<div class="colored-section">
+			<h2>Core features</h2>
+			<div class="feature-circles">
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/stacks.svg"/>
+					</div>
+					<h4>Call stacks</h4>
+					<p>Add support of call stacks in instrumentation instead of the uniq call site. This require a lot of work but is an important feature.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/translate.svg"/>
+					</div>
+					<h4>Translation</h4>
+					<p>Could be really cool to get translations for the GUI and command-line tool.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/time-chart.svg"/>
+					</div>
+					<h4>Time charts</h4>
+					<p>Add some metric over time (NUMA node accesses).</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/distance.svg"/>
+					</div>
+					<h4>NUMA distance</h4>
+					<p>Report the NUMA distance instead of just local/remote. First globally then for each callsite.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/improve-help.svg"/>
+					</div>
+					<h4>Improve help</h4>
+					<p>Ideally, I wanted to get documentation of all the features provided by the interface linked to some simple example of bad pattern it helps to detect.</p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="white-section">
+			<h2>Integration with other tools</h2>
+			<div class="feature-circles">
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/valgrind.png"/>
+					</div>
+					<h4>Valgrind</h4>
+					<div>Pintool looks more performant than valgrind but for portability it might be interesting to also have integration in with this tool.</div>
+				</div>
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/dynamorio.png"/>
+					</div>
+					<h4>DynamoRIO</h4>
+					<div>Similar to pintool but with support of ARM. It might be interesting to compare the final instrumentation performance.</div>
+				</div>
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/maqao.png"/>
+					</div>
+					<h4>Maqao</h4>
+					<div>This time with static instrumentation, but still interesting. It might require some work to instrumentation the libraries.</div>
+				</div>
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/curses.jpg"/>
+					</div>
+					<h4>Curses GUI</h4>
+					<p>Could be interesting to also get a curses GUI python.</p>
+				</div>
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/contrib/electron.svg"/>
+					</div>
+					<h4>Electron</h4>
+					<div>Provide a standard graphical interface by using electron.</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class='footer'>
+			<div>
+				Copyright © 2018 NUMAPROF. 
+				<!--All right reserved. Theme from <a href='http://indico-software.org/'>Indico website</a>-->
+			</div> 
+			<div>
+				<a href='http://www.github.com/memtt/numaprof' class="no-decoration">
+					<i class="fa fa-github fa-lg"></i>
+				</a>
+			</div>
+		</div>
+	</body>
+</html>

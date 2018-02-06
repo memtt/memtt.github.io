@@ -1,0 +1,152 @@
+<html>
+	</body>
+		<div class="note">
+			<h3>Code Hydro</h3>
+			<p class='meta'>By Sébastien Valat - Jan 17, 2018</p>
+			<p>On can look on the Hydro simulation benchmark available on Github : 
+			<a target="_blank" href='https://github.com/HydroBench/Hydro'>https://github.com/HydroBench/Hydro</a>. 
+			First clone it and move to an older version which is not yet optimized :</p>
+
+			<pre class="terminal" style='width:100%'>
+git clone git@github.com:HydroBench/Hydro.git
+git checkout -b numaprof d1303337624944f3ecf93ad06704abc30a0c6e29</pre>
+
+			<p>The go into the HydroC/HydroCplusMPI directory and build it. For the test I'm running on a Intel(R) Xeon Phi(TM) CPU 7210 @ 1.30GHz:</p>
+			
+			<pre class="terminal" style='width:100%'>
+cd HydroC/HydroCplusMPI
+#if you have access to a KNL
+make KNL=O HBM=O MPI=N AVX2=N CXX=g++
+#if not
+make KNL=N HBM=N MPI=N AVX2=N CXX=g++</pre>
+
+			<p>Copy the input.nml as input-numaprof.nml, then edit the config file and change the given lines (adapt nstepmax to other values if it take too long on your test machine:</p>
+			<pre class="terminal" style='width:100%'>
+#tend=20000
+tend=1
+#nstepmax=15
+numa=1</pre>
+
+			<p>You can then make a first run, it will take 42.82s, now if enabling the MCDRAM usage (HBM=O) we obtain 28.03s showing a large impact on this application.</p>
+			<pre class="terminal" style='width:100%'>OMP_PROC_BIND=TRUE time ./hydro.knl -i input-numaprof.nml</pre>
+
+			<p>You can then profile with NUMAPROF. Don't forget it has an overhead of ~40x so you might want to reduce the number of steps (nstepmax=15) in the config file to get shorter run. You will notice a lot of unpinned memory accesses.</p>
+			<pre class="terminal" style='width:100%'>OMP_PROC_BIND=TRUE time numaprof ./hydro.knl -i input-numaprof.nml</pre>
+			<p>On the left without HBM memory and on right right with HBM memory :</p>
+			<center>
+				<img src='images/examples/hydro-0.png' width='49%'/>
+				<img src='images/examples/hydro-1.png' width='49%'/>
+			</center>
+			
+			<p>We can also look on the access matrix with and without the HBM.
+			Here we mostly notice that the memory is allocated into one node and accessed from all the nodes which explain the large remote memory accesses in the previous charts.</p>
+			
+			<center>
+				<img src='images/examples/hydro-7-1.png' width='49%'/>
+				<img src='images/examples/hydro-7-2.png' width='49%'/>
+			</center>
+			
+			<!--===========================================================-->
+			
+			<h4>Parallel allocations ordering</h4>
+
+			<p>For the first step we search for the remote accesses, we can observe from the source code annotations that it comes mostly from function of objects <i>Tile::*</i>. We notice the OpenMP spin lock, but we cannot change anything about this.
+			<center><img src='images/examples/hydro-12.png' width='100%' style='border:1px solid gray'/></center>
+			
+			<p>We can search with the metric <i>Alloc remote access</i>, this time it point the <i>Domain::setTiles</i> function which allocate Tile objects. This time this is done in threads.</p>
+			<center><img src='images/examples/hydro-8.png' width='100%' style='border:1px solid gray'/></center>
+			
+			<p>Looking on remote accesses show again accesses inside the Tile object :</p>
+			<center><img src='images/examples/hydro-9.png' width='100%' style='border:1px solid gray'/></center>
+			
+			<p>One can search which function calling all those functions. Here there is a missing feature of NUMAPROF, we would like to have the call stack. Anyway, reading the code leads to the call of <i>Tile::godunov()</i> which
+			is called from <i>Domain::computeTimeStep()</i> in a loop indexed by <i>i</i>:
+			<center><img src='images/examples/hydro-10.png' width='100%' style='border:1px solid gray'/></center>
+			<p>If we look a little bit at the begining of the loop we now see that the <i>i</i> index is modified via
+			the <i>m_mortonIdx</i> array, this is not done at the allocation time.
+			<center><img src='images/examples/hydro-11.png' width='100%' style='border:1px solid gray'/></center>
+			
+			<p>We can optimize by using the same re-ordering at allocation time, move to Domain.cpp and search <i>new Tile</i>. We can modify the loop by computing <i>t</i> and use it as index. The <i>m_mortonIdx</i> array is setup in the next loop so you need to move the modifed loop after the two next part so after end of <i>if(m_withMorton)</i>.</p>
+			<pre class="terminal" style='width:100%'>
+#pragma omp parallel for private(i) if (m_numa) SCHEDULE
+	for (int32_t i = 0; i &lt; m_nbtiles; i++) {
+		int t = m_mortonIdx[i];
+		m_tiles[t] = new Tile;
+	}</pre>
+
+			<p>You also need to change the loop on <i>m_nbtiles</i> at the end of the function by using omp parallel and
+			the <i>m_mortonIdx</i> trick. As there is some global variables we need to use the critical trick:</p>
+			<pre class="terminal" style='width:100%'>
+#pragma omp parallel for if (m_numa) SCHEDULE
+	for (int32_t i = 0; i &lt; m_nbtiles; i++) {
+		int t = m_mortonIdx[i];
+		#pragma omp critical
+		{
+			m_tiles[t]-&gt;initTile(m_uold);
+			m_tiles[t]-&gt;setMpi(m_nProc, m_myPe);
+			m_tiles[t]-&gt;initPhys(m_gamma, m_smallc, m_smallr, m_cfl, m_slope_type, 
+			                     m_nIterRiemann, m_iorder, m_scheme);
+			m_tiles[t]-&gt;setScan(X_SCAN);
+		}
+	}</pre>
+			<!--<p>The execution time is now 21.44 so we obtained a speed-up of 1.4x</p>-->
+			
+			<!--===========================================================-->
+
+			<h4>Parallel allocation</h4>
+
+			<p>We can continue the analysis by looking on the annotated sources by looking with the "Remote access" metric. The remote accesses are mainly in <i>Tile::traceonRow</i> et <i>Tile:riemannOnRowInRegs</i>.</p>
+			<center><img src='images/examples/hydro-2.png' width='100%' style='border:1px solid gray'/></center>
+
+<!-- 			<p>les qUDS[i]..... viennent de tes matrices si on cherche dans le code (...getRow).</p> -->
+
+			<p>We can follow by looking on the allocation sites by using the "<i>Alloc remote access</i>" metric. Here we found the allocation of the Soa and Matrix2 in ThreadBuffers functions:</p>
+			<center><img src='images/examples/hydro-3.png' width='100%' style='border:1px solid gray'/></center>
+
+			<p>By looking on the code, the ThreadBuffers are allocated in a sequential loop so they are allocated only by the first thread (Domain.cpp).</p>
+			<pre class="terminal" style='width:100%'>
+for (int32_t i = 0; i &lt; m_numThreads; i++) {
+        m_buffers[i] = new ThreadBuffers(0, tileSizeTot, 0, tileSizeTot);
+        assert(m_buffers[i] != 0);
+}</pre>
+			<p>We can patch by using parallelism to allocate the same way than accesses. Take care to add a critical section as there is global variables used in the ThreadBuffers constructor.</p>
+			<pre class="terminal" style='width:100%'>
+#pragma omp parallel
+{
+        int i = omp_get_thread_num();
+		#pragma omp critical
+        m_buffers[i] = new ThreadBuffers(0, tileSizeTot, 0, tileSizeTot);
+        assert(m_buffers[i] != 0);
+}</pre>			
+			<!-- ================================================== -->
+			
+			<h4>Progress evaluation</h4>
+			
+			<p>We can now look again on the global charts and timing to evaluate the progress. Without the HBM, the time is still 43s without the HBM, but with the HBM the time is now 22.95 seconds so a speed up of 1.22x.</p>
+
+			<center>
+				<img src='images/examples/hydro-13-1.png' width='49%'/>
+				<img src='images/examples/hydro-13-2.png' width='49%'/>
+			</center>
+			
+			<p>We can also look on the access matrix with and without the HBM.
+			Now we observe the expected diagonal with still a little bit more 
+			accesses on node 1.</p>
+			
+			<center>
+				<img src='images/examples/hydro-14-1.png' width='49%'/>
+				<img src='images/examples/hydro-14-2.png' width='49%'/>
+			</center>
+			
+			<!-- ================================================== -->
+			
+			<h4>Remaining remote allocations</h4>
+			
+			<p>We can now look for the remaining remote allocations. Now we observe that most of them are due to the spinlock from OpenMP. We also observe that the rest comes from non allocated objects. Looking on the line we observe the <i>one</i> and <i>half</i> global variables.</p>
+			
+			<center><img src='images/examples/hydro-15.png' width='100%' style='border:1px solid gray'/></center>
+			<center><img src='images/examples/hydro-16.png' width='50%'/></center>
+			
+		</div> 
+	</body>
+</html>

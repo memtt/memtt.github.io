@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+	<meta>
+		<meta charset="utf-8">
+		<title>numaprof</title>
+
+		<!-- JQuery -->
+		<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+		<!-- Some google fonts -->
+ 		<link href='//fonts.googleapis.com/css?family=Corben:700' rel='stylesheet' type='text/css'/> 
+		<link href="//fonts.googleapis.com/css?family=Maven+Pro:400,500,700,900" rel="stylesheet" type="text/css"/>
+ 		<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/> 
+		<!-- bootstrap for carousel --> 
+		<link href='bower_components/bootstrap/dist/css/bootstrap.min.css' rel='stylesheet' type='text/css'/>
+		<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<!-- Menu & style -->
+		<script type="text/javascript" src="js/menu.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css"/>
+		<link rel="icon" type="image/png" href="images/ico.png">
+	</meta>
+	<body>
+		<div class="navbar">
+			<div>
+				<h1 class='title'>NUMAPROF</h1>
+				<ul class='nav'></ul>
+			</div>
+		</div>
+		<div class='index-header'>
+			<div class='subtitle'>A NUMA memory profiling tool to track memory accesses</div>
+			<div class='subtitle-underline'></div>
+			<div class='summary'>
+				Find where you make remote, local and MCDRAM memory accesses and where you pin the memory by making first touch accesses.
+			</div>
+			<div class='downloads'>
+				<div class='source'><a href='TODO'>Source - 0.1.0</a></div>
+				<div class='others'>
+					<!--<a href='TODO'>Fedora .rpm</a> |-->
+					<!--<a href='TODO'>Debian .deb</a> |-->
+					<a href='https://github.com/memtt/numaprof/releases'>Others</a>
+				</div>
+				<a href='http://www.github.com/memtt/numaprof'><img src='images/logos/github-1.svg' width="50px"/></a>
+			</div>
+			<div class="index-screenshot">
+				<span/>
+			</div>
+		</div>
+		<div class='index-intro'>
+			<p>
+				NUMAPROF is a memory access profiling tool based on pintool. It helps to detect remote NUMA and un-pinned memory accesses. On Intel KNL it also tracks accesses to the MCDRAM.
+				The tool profide a nice web interface to explore the extracted profile by annotating the source code.
+			</p>
+			<p>
+				It is the first published version. Of course there are plenty of things to fix. Thank you for your understanding and to report bugs. Feel free to contribute to improving it.
+			</p>
+		</div>
+		<div class='colored-section'>
+			<h2>Features</h2>
+			<div class='feature-circles'>
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/code-annot.png"/>
+					</div>
+					<h4>Code annotation</h4>
+					<p>NUMAPROF provides code annotations to map allocation metrics directly onto your source code.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/threads-statistics.png"/>
+					</div>
+					<h4>Thread statistics</h4>
+					<p>You get some statistics about memory accesses over threads.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/thread-details.png"/>
+					</div>
+					<h4>Thread pinning history</h4>
+					<p>Track all the thread pinning history and statistics to better understand your profile.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/access-matrix.png"/>
+					</div>
+					<h4>Access matrix</h4>
+					<p>Provide a global and per thread access matrix to better understand the global balancing over your nodes.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/alloc-site.png"/>
+					</div>
+					<h4>Report on allocation site</h4>
+					<p>Report remote/local accesses on access site and on allocation site to quickly find segments generating remote accesses.</p>
+				</div>
+				
+				<div class="feature">
+					<div class="feature-circle">
+						<img src="images/features/per-line-details.png"/>
+					</div>
+					<h4>Per-line details</h4>
+					<p>When you put your mouse on access line you get all the details on this line with charts.</p>
+				</div>
+
+				<div class="link-to-details-fatures">
+					You can get a more complete list of features on <a href='features.html'>this page</a>
+				</div>
+			</div>
+		</div>
+		<div class='white-section'>
+			<div class="left-right-features">
+				<div class="entry">
+					<div>
+						<center><a target="_blank" href="https://software.intel.com/en-us/articles/pin-a-dynamic-binary-instrumentation-tool"><img width="120px" src='images/logos/pintool-logo.jpg'></a></center><br>
+						<img src="images/malt-wrapping.svg"></img>
+					</div>
+					<div>
+						NUMAPROF use pintool to make on the fly binary instrumentation. It intercepts all calls to malloc/mmap... to capture memory allocations and track their NUMA
+						mapping via move_pages. It then instrument all the memory accesses (read/write) to determine remote/local accesses. Finally, it tracks the thread pinning
+						to match with the memory accesses.
+					</div>
+				</div>
+				
+				<div class="entry">
+					<div>
+						MALT provides a web GUI based on new technologies like D3JS and python Flask. Thanks to this it might be easier	for you to run MALT on a remote node by forwarding the connection via SSH.
+					</div>
+					<div>
+						<a target="_blank" href="http://www.python.org/"><img width="180px" src='images/logos/python-logo.png'></a><br/>
+						<a target="_blank" href="http://flask.pocoo.org/"><img width="180px" src='images/logos/flask-logo.png'></a><br/>
+						<a target="_blank"  href="http://d3js.org/"><img width="280px" src='images/logos/D3.js-Logo.png'></a><br/>
+						<a target="_blank" href="https://jquery.com/"><img width="180px" src='images/logos/jquery-logo.png'></a>
+					</div>
+				</div>
+
+				<div class="entry">
+					<div>
+						<pre class="terminal">numaprof-pintool ./my_program
+
+numaprof-webview \
+	./numaprof-my_program-1588.json
+
+browser http://localhost:8080</pre>
+					</div>
+					<div>
+						NUMAPROF is used by running the profiling tool on your command just as you do with valgrind. Then, open the profile file with the NUMAPROF webserver and connect to it with your browser by using http://localhost:8080.
+					</div>
+				</div>
+	<!-- 		</div> -->
+
+	<!-- 		<div class="divbg"> -->
+				<!--<div class="how">
+					<div class="entry">
+						<div>
+							NUMAPROF is now OpenSource on GitHub and was developed in 2017 at CERN after some exchanges with a research engineer (Othman Bouizi) from the Exascale Computing Research Lab.
+						</div>
+						<div>
+							<a target="_blank"  href="https://www.cern.ch/"><img width="260px" src='images/logos/logo-cern.jpg'></a><br/>
+						</div>
+					</div>
+				</div>-->
+			</div>
+		</div>
+		<div class='footer'>
+			<div>
+				Copyright © 2018 NUMAPROF. 
+				<!--All right reserved. Theme from <a href='http://indico-software.org/'>Indico website</a>-->
+			</div>
+			<div>
+				<a href='http://www.github.com/memtt/numaprof' class="no-decoration">
+					<i class="fa fa-github fa-lg"></i>
+				</a>
+			</div>
+		</div>
+	</body>
+</html>

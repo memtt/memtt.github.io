@@ -1,0 +1,22 @@
+{
+  "name": "malt-website",
+  "version": "0.0.0",
+  "authors": [
+    "Sebastien Valat <sebastien.valat.dev@orange.fr>"
+  ],
+  "description": "Website for MALT project",
+  "license": "CeCILL-C",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~1.11.3",
+    "bootstrap": "~3.3.5",
+    "showdown": "^1.8.6",
+    "bibtex-js": "https://github.com/pcooksey/bibtex-js.git"
+  }
+}

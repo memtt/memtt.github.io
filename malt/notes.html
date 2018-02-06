@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+	<meta>
+		<meta charset="utf-8">
+		<title>malt - notes</title>
+
+		<!-- JQuery -->
+		<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+		<!-- Some google fonts -->
+ 		<link href='//fonts.googleapis.com/css?family=Corben:700' rel='stylesheet' type='text/css'/> 
+		<link href="//fonts.googleapis.com/css?family=Maven+Pro:400,500,700,900" rel="stylesheet" type="text/css"/>
+ 		<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/> 
+		<!-- bootstrap for carousel --> 
+		<link href='bower_components/bootstrap/dist/css/bootstrap.min.css' rel='stylesheet' type='text/css'/>
+		<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<!-- Menu & style -->
+		<script type="text/javascript" src="js/menu.js"></script>
+		<!-- bibtex -->
+		<script type="text/javascript" src="bower_components/bibtex-js/src/bibtex_js.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css"/>
+		<link rel="icon" type="image/png" href="images/ico.png">
+	</meta>
+	<body>
+		<div class="navbar">
+			<div>
+				<h1 class='title'>MALT</h1>
+				<ul class='nav'></ul>
+			</div>
+		</div>
+		
+		<div class='feature-image'>	
+			<!-- From http://www.icone-png.com/site-web/prise-note/ -->
+			<img src='images/notes-logo.png' style="margin-top:30px;margin-bottom:30px;height:180px;"/>
+		</div>
+		
+		<div class="note">
+			<h3>Papers</h3>
+			<p class='meta'>By Sébastien Valat - Oct 23, 2017</p>
+			<p>Paper you can read to better understand MALT and cite:</p>
+			
+		<!--	<div class="bibtex_structure">
+				<div class="group year" extra="ASC number">
+					<div style="padding-bottom:10px;"></div>
+					<div class="sort journal" extra="DESC string">
+						<div class="templates"></div>
+					</div>
+				</div>
+			</div>
+-->
+			
+			<div id="bibtex_display">
+			
+			<div class="if bibtex_template" style="display: none;">
+				<ul> <li>
+				<span class="if journal !nolink">
+					<a class="bibtexVar" href="http://www.cs.cmu.edu/~mmv/papers/+BIBTEXKEY+.pdf" extra="BIBTEXKEY">
+						<span style="text-decoration: underline;" class="title"></span>,
+					</a>
+				</span>
+				<span class="if title nolink">
+						<span class="title"></span>,
+				</span>
+				<div class="if author">
+					<span class="author"></span>
+				</div>
+				<div>
+					<span class="if journal"><em><span class="journal"></span></em>,</span>
+					<span class="if booktitle">In <em><span class="booktitle"></span></em>,</span>
+					<span class="if editor"><span class="editor"></span> (editors),</span>
+					<span class="if publisher"><em><span class="publisher"></span></em>,</span>
+					<span class="if !journal number">Technical report <span class="number"></span>,</span>
+					<span class="if institution"><span class="institution"></span>,</span>
+					<span class="if address"><span class="address"></span>,</span>
+					<span class="if volume"><span class="volume"></span>,</span>
+					<span class="if journal number">(<span class="number"></span>),</span>
+					<span class="if pages"> pages <span class="pages"></span>,</span>
+					<span class="if month"><span class="month"></span>,</span>
+					<span class="if year"><span class="year"></span>.</span>
+					<span class="if note"><span class="note"></span>.</span>
+					<a class="bibtexVar" role="button" data-toggle="collapse" href="#bib+BIBTEXKEY+" aria-expanded="false" aria-controls="bib+BIBTEXKEY+" extra="BIBTEXKEY">
+					[bib]
+					</a>
+				</div>
+				<div class="bibtexVar collapse" id="bib+BIBTEXKEY+" extra="BIBTEXKEY">
+					<div class="well">
+						<pre><span class="bibtexraw noread"></span></pre>
+					</div>
+				</div>
+				<div style="display:none"><span class="bibtextype"></span></div>
+				</li></ul>
+			</div>
+			
+			</div>
+			<ul>
+				<div id="bibtex_display"></div>
+			</ul>
+			<textarea id="bibtex_input" style="display:none;">
+@inproceedings{2017-seps-malt,
+	author = {Valat, S{\'e}bastien and Charif-Rubial, Andres S. and Jalby, William},
+	title = {MALT: A Malloc Tracker},
+	booktitle = {Proceedings of the 4th ACM SIGPLAN International Workshop on Software Engineering for Parallel Systems},
+	series = {SEPS 2017},
+	year = {2017},
+	isbn = {978-1-4503-5517-9},
+	location = {Vancouver, BC, Canada},
+	pages = {1--10},
+	numpages = {10},
+	url = {http://doi.acm.org/10.1145/3141865.3141867},
+	doi = {10.1145/3141865.3141867},
+	acmid = {3141867},
+	publisher = {ACM},
+	address = {New York, NY, USA},
+	keywords = {allocation, management, memory, profiling, tool},
+} 
+			</textarea>
+		</div>
+		
+		<div class="note">
+			<h3>Note about origin</h3>
+			<p class='meta'>By Sébastien Valat - Sept 28, 2015</p>
+			<p>MALT was developed during a one-year post-doc 
+			at Exascale Comping Lab in 2014 just after I finished my PhD. in memory management 
+			for High Performance Computing at the French CEA. Most of the idea I put in this project
+			come from observations I made during my work on a parallel NUMA aware malloc 
+			implementation for the <a href='http://mpc.hpcframework.paratools.com/'>MPC framework</a> and some work on operating systems.
+			
+			<p>With this project (MALT), started by <a href='http://www.uvsq.fr/'>UVSQ</a>, I wanted to get some answers to the questions :
+			<ul>
+				<li>"<i>I consume too much memory on this simulation, how can I improve it ?</i>"</li>
+				<li>"<i>I am slow due to too much allocation, where are they and which properties have they ?</i>".</li> 
+			</ul>
+			During my PhD.
+			answer on Linux was mostly "<i>I cannot get the answer</i>". At least in the way I expect. I wanted to apply the same approach as
+			valgrind / kcachegrind for performance and with open source tools. I hope I provide with MALT a way to fill a little bit this gap and permit the users to better understand the memory properties of their applications. I also hope it can lead you to better practices about usage of malloc and to better understand
+			what is acceptable and what is not.</p>
+			
+			<p>I want to thank the <a href='http://www.exascale-computing.eu'>Exascale Computing Lab</a> and <a href='http://www.maqao.org/'>Maqao</a> team managed by William Jalby and Andrés S. Charif-Rubial who made this project born. Also thanks to the <a href='http://valgrind.org/'>valgrind</a> / <a href='http://kcachegrind.sourceforge.net/html/Home.html'>kcachgrind</a> team as my inspiration for the approach come from their great work.</p>
+			
+			<p>I finally want to thank Jean-Baptiste Besnard as he provides me some great ideas for this tool while we worked together at Exascale Computing Lab. You can find a similar approach to his tool for MPI profiling : <a href=''>MALP</a>. Also thank to Jean-Yves Vet for discussions and ideas on web technologies. A big thank to Marc Pérache and William Jalby who initiate me to all those memory stuff.</p>
+		</div>
+		<div class="note">
+			<h3>You want to understand what append ?</h3>
+			<p class='meta'>By Sébastien Valat - Sept 28, 2015</p>
+			<p>
+			If ever you want to understand a little bit more what append inside a memory allocator in your applications, you can follow some of those links :
+			<ul>
+				<li>A really complete tour of how memory work (from hardware to software with OS layers) : <a href="http://www.akkadia.org/drepper/cpumemory.pdf">What Every Programmer Should Know About Memory</a> from Urlich Drepper</li>
+				<li>Old (1995) but complete survey of sequential memory allocator algorithms from P. R. Wilson <a href="http://www.cs.northwestern.edu/~pdinda/icsclass/doc/dsa.pdf">Dynamic Storage Allocation
+A Survey and Critical Review</a></li>
+				<li>If you are interested in the internals of a modern and good parallel memory allocator : <a href="http://people.freebsd.org/~jasone/jemalloc/bsdcan2006/jemalloc.pdf ">JeMalloc FreeBSD paper</a> or more updated : <a href="https://www.facebook.com/notes/facebook-engineering/scalable-memory-allocation-using-jemalloc/480222803919">the facebook jemalloc page</a></li>
+				<li>Small advertising, my PhD. thesis, if you search some HPC specific information on memory management (NUMA, parallel, operating systems...), in french sorry : <a href='./downloads/2014-valat-pdh-theses.pdf'>Contribution à l'amélioration des méthodes d'optimisation de la gestion de la mémoire dans le cadre du Calcul Haute Performance</a>. But you can find my PhD. defense <a href='./downloads/2014-valat-phd-defense-slides.pdf'>slides here</a>, in English.</li>
+			</ul>
+			</p>
+			
+		</div>
+		<div class="note">
+			<h3>You want to test other memory tools ?</h3>
+			<p class='meta'>By Sébastien Valat - Sept 28, 2015</p>
+			<p>
+			Of course there are some existing tools on Unix-based platforms for this kind of problem, if ever you find them more interesting than MALT or more adequate to your case (fill free to contact me if I missed some) :
+			</p>
+			<ul>
+				<li>Profiler provided with google allocator : <a href='https://code.google.com/p/gperftools/wiki/GooglePerformanceTools' target="_blank">Google Heap Profiler</a></li>
+				<li>Valgrind memcheck : <a href='http://valgrind.org/' target="_blank">Valgrind memcheck</a></li>
+				<li>Valgrind massif : <a href='http://valgrind.org/' target="_blank">Valgrind massif</a> with <a href='https://projects.kde.org/projects/extragear/sdk/massif-visualizer'>Massif visualizer</a></li>
+				<li>Dr. Memory : <a href='http://www.drmemory.org/' target="_blank">Dr. Memory</a></li>
+				<li>Commercial tool, <a href='https://www.parasoft.com/product/insure/' target="_blank">Parasoft Insure++</a></li>
+				<li>Commercial tool, <a href='http://unicomsi.com/products/purifyplus/' target="_blank">Unicom PurifyPlus</a> (previously IBM)</li>
+				<li><a href='https://www.cs.uoregon.edu/research/tau/home.php' target="_blank">Tau</a> is more a communication profiling tool for HPC apps, but it offers a <a href='https://www.cs.uoregon.edu/research/tau/docs/old/bk05ch04.html'>memory module</a></li>
+				<li>Similar approach than MALT for the backend : <a href='http://igprof.org/' target="_blank">IgProf</a></li>
+				<li>A debug malloc library : <a href='http://dmalloc.com/' target="_blank">Dmalloc</a></li>
+				<li>Profiling and leak detection : <a href='http://people.redhat.com/otaylor/memprof/' target="_blank">MemProf</a></li>
+				<li><a href='http://panthema.net/2013/malloc_count/' target="_blank">Malloc count</a></li>
+				<li><a href='http://mpatrol.sourceforge.net/' target="_blank">mpatrol</a></li>
+				<li>Tracing tool for parallel programs : <a href='http://eztrace.gforge.inria.fr/' target="_blank">EZTrace</a></li>
+				<li>Find Obsolete Memory : <a href='https://gitlab.cern.ch/fom/FOM-tools/wikis/home'>FOM Tools</a></li>
+			</ul>
+                        <p>If you search some parallel memory allocators, you can find those one on the net:</p>
+                        <ul>
+                                <li><a href='http://www.canonware.com/jemalloc/'>Jemalloc (facebook, firefox)</a></li>
+                                <li><a href='https://github.com/gperftools/gperftools'>TCMalloc (google)</a></li>
+				<li><a href='http://www.hoard.org/'>Hoard</a></li>
+                                <li><a href='http://locklessinc.com/downloads/'>Lockless allocator</a></li>
+				<li><a href='http://mpc.hpcframework.paratools.com/'>MPC</a> memory allocator (look into mpcframework/MPC_Allocator)</li>
+                        </ul>
+		</div>
+		
+		<div class='footer'>
+			<div>
+				Copyright © 2015 MALT. All right reserved. 
+				<!--Theme from <a href='http://indico-software.org/'>Indico website</a>-->
+			</div>
+			<div>
+				<a href='http://www.github.com/memtt/malt' class="no-decoration">
+					<i class="fa fa-github fa-lg"></i>
+				</a>
+			</div>
+		</div>
+	</body>
+</html>

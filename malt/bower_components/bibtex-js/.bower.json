@@ -1,0 +1,13 @@
+{
+  "name": "bibtex-js",
+  "homepage": "https://github.com/pcooksey/bibtex-js",
+  "_release": "237827702e",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "237827702ea39190c5094df2d8866b2c46748f37"
+  },
+  "_source": "https://github.com/pcooksey/bibtex-js.git",
+  "_target": "*",
+  "_originalSource": "https://github.com/pcooksey/bibtex-js.git"
+}
