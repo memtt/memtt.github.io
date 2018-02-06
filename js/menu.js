@@ -1,8 +1,8 @@
 $(document).ready(function() {
 	//define
 	var menuEntries = [
-		{title: 'MALT', url: 'http://svalat.web.cern.ch/svalat/malt-website/v2/'},
-		{title: 'NUMAPROF',url: 'http://svalat.web.cern.ch/svalat/numaprof-website'},
+		{title: 'MALT', url: 'malt/index.html'},
+		{title: 'NUMAPROF',url: 'numaprof/index.html'},
 	];
 	
 	//get current address
