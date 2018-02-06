@@ -1,6 +1,8 @@
 Numaprof
 ========
 
+[![Build Status](https://travis-ci.org/memtt/numaprof.svg?branch=master)](https://travis-ci.org/memtt/numaprof)
+
 What is it ?
 ------------
 
@@ -24,13 +26,23 @@ Numaprof extract the given metrics per call site and per malloc call site :
  * unpinnedThreadAccess : Accès depuis un thread non bindé à une page dont le thread ayant fait le first touch était bindé
  * unpinnedBothAccess : Accès depuis un thread non bindé à une page mise en place par un thread non bindé
  * mcdram : Accès à la mcdram sur KNL
+ 
+Dependencies
+------------
+
+NUMAPROF needs:
+
+ * Intel Pintool (required, tested : 3.5) : https://software.intel.com/en-us/articles/pin-a-binary-instrumentation-tool-downloads. Take care of the licence which is free only for non commercial use.
+ * Python (required). To run the webserver.
+ * Qt5-webkit (optional, greater than : 5.4). To provide a browser embedded view to use ssh X forward instead of the webserver port forwarding.
 
 Install
 -------
 
-First download the last version of pintool (tested : 3.2-81205 on x86_64 arch : https://software.intel.com/en-us/articles/pin-a-binary-instrumentation-tool-downloads) and extract it somewhere.
+First download the last version of pintool (tested : 3.5 on x86_64 arch : https://software.intel.com/en-us/articles/pin-a-binary-instrumentation-tool-downloads) and extract it somewhere.
+TAKE CARE, PINTOOL IS NOT OPEN-SOURCE AND IS FREE ONLY FOR NON-COMMERCIAL USE.
 
-Then use the configure script (for pintool mode do not use directly the cmake script, the configure script does extra things with pin):
+Then use the configure script :
 
 ```
 mkdir build
@@ -77,6 +89,12 @@ If you run the webview on a remote node, you can forward the http session to you
 ssh myhost -L8080:localhost:8080
 ```
 
+If you have Qt5-webkit installed you can also automatically open a bowser view by using ssh X-Forward by using :
+
+```
+numaprof-qt5 numaprof-1234.json
+```
+
 Kcachgrind compatibility
 ------------------------
 
@@ -111,6 +129,8 @@ removeRatio=0.5
 [core]
 skipStackAccesses=true
 threadCacheEntries=512
+objectCodePinned=false
+skipBinaries=
 
 [info]
 hidden=false
@@ -131,3 +151,4 @@ Licence
 -------
 
 Numaprof is distributed under CeCILL-C licence which is LGPL compatible.
+Take care, NUMAPROF currently strongly depend on Intel Pintool which is free only for non commercial use.

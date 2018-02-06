@@ -8,7 +8,7 @@ $(document).ready(function() {
 		{title: 'Examples',url: 'example.html'},
 		{title: 'Notes', url: 'notes.html'},
 		{title: 'Contrib', url: 'contrib.html'},
-		{title: 'MemTT', url: 'https://svalat.web.cern.ch/svalat/numaprof-website/main/'},
+		{title: 'MemTT', url: '../index.html'},
 	];
 	
 	//get current address
