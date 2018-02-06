@@ -7,7 +7,7 @@ $(document).ready(function() {
 		{title: 'Doc',url: 'doc.html'},
 		{title: 'Notes', url: 'notes.html'},
 		{title: 'Contribute', url: 'contrib.html'},
-		{title: 'MemTT', url: 'https://svalat.web.cern.ch/svalat/numaprof-website/main/'},
+		{title: 'MemTT', url: '../index.html'},
 	];
 	
 	//get current address
