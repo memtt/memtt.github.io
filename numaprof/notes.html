@@ -54,6 +54,32 @@
 			NUMAPROF was developed to answer all these questions. It uses pintool to instrument the binary on the fly and intercept all the memory accesses an check if they are remote, local, mcdram or unpinned.</p>
 		</div>
 		<div class="note">
+			<h3>Talks</h3>
+			<!--<p class='meta'>Dec. 2017</p>-->
+			<ul>
+				<li>
+					08/2018 -
+					<b><a href='downloads/2018-08-nuaprof-europar-coloc.pdf'>NUMAPROF, A NUMA Profiler</a></b><br/>
+					<a href='https://project.inria.fr/coloc/'>Europar/Coloc 2018</a> - Turin
+				</li>
+				<li>
+					03/2018 -
+					<b><a href='downloads/2018-03-MALT-CERN-IT.pdf'>MALT, A Malloc Tracker</a></b><br/>
+					CERN IT - Meyrin
+				</li>
+				<li>
+					03/2018 -
+					<b><a href='downloads/2018-03-nuaprof.pdf'>NUMAPROF, a NUMA profiling tool</a></b><br/>
+					CERN IT - Meyrin
+				</li>
+				<li>
+					02/2018 -
+					<b><a href='downloads/2018-03-nuaprof.pdf'>NUMAPROF, a NUMA profiling tool</a></b><br/>
+					<a href='http://inhpact.hpcframework.paratools.com/'>InHP@CT</a> teratech meeting - Bruyère-le-chatel
+				</li>
+			</ul>
+		</div>
+		<div class="note">
 			<h3>You want to understand what append ?</h3>
 			<p class='meta'>By Sébastien Valat - Sept 28, 2015</p>
 			<p>
@@ -63,7 +89,47 @@
 				<li>Small advertising, my PhD. thesis, if you search some HPC specific information on memory management (NUMA, parallel, operating systems...), in french sorry : <a href='./downloads/2014-valat-pdh-theses.pdf'>Contribution à l'amélioration des méthodes d'optimisation de la gestion de la mémoire dans le cadre du Calcul Haute Performance</a>. But you can find my PhD. defense <a href='./downloads/2014-valat-phd-defense-slides.pdf'>slides here</a>, in English.</li>
 			</ul>
 			</p>
-			
+		</div>
+		<div class="note">
+			<h3>Similar papers and tools</h3>
+			<ul>
+				<li>
+					<b>Numatop</b></br>
+					Source code : <a href='https://github.com/intel/numatop'>Intel Github</a>
+				</li>
+				<li>
+					<b>HPCToolkit</b></br>
+					Paper : <a href='https://doi.org/10.1145/2555243.2555271'>A tool to analyze the performance of multithreaded programs on NUMA architectures</a> - PPoPP'14<br/>
+					Source code: <a href='https://github.com/HPCToolkit/hpctoolkit'>GitHub/HPCToolkit/hpctoolkit</a> (branch hpctoolkit-datacentric).
+				</li>
+				<li>
+					<b>Tabarnac</b><br/>
+					Paper : <a href='https://doi.org/10.1145/2835238.2835239'>TABARNAC: visualizing and resolving memory access issues on NUMA architectures
+</a> - VPA'15</br>
+					Report : <a href='https://hal.inria.fr/hal-01202105'>TABARNAC: Tools for Analyzing Behavior of Applications Running on NUMA Architecture.</a><br/>
+					Source code: <a href='https://gitlab.com/dbeniamine/Tabarnac'>Gitlab/dbeniamine/Tabarnac</a>
+				</li>
+				<li>
+					<b>MemProf</b><br/>
+					Paper: <a href='https://www.usenix.org/system/files/conference/atc12/atc12-final229.pdf'>MemProf: a Memory Profiler for NUMA Multicore Systems</a> - Usenix ATC'12
+				</li>
+				<li><b>Snperf</b><br/>
+					<a href='http://www.cs.utah.edu/~uros/thesis/thesis.pdf'>Thesis</a> - Uros Prestor<br/>
+					Paper: <a href='https://doi.org/10.1109/WWC.2001.990749'>An application-centric ccNUMA memory profiler</a> - WWWC'4
+				</li>
+				<li>
+					<b>Numagrind</b><br/>
+					Paper: <a href='https://ieeexplore.ieee.org/document/6012912/'>Profiling Directed NUMA Optimization on Linux Systems: A Case Study of the Gaussian Computational Chemistry Code</a> - IPDPS'2011
+				</li>
+				<li>
+					<b>Memphis</b><br/>
+					Paper: <a href='https://doi.org/10.1109/ISPASS.2010.5452060'>Memphis: Finding and fixing NUMA-related performance problems on multi-core platforms</a> - ISPASS 2010
+				</li>
+				<li>
+					<b>SIMT</b><br/>
+					Paper: <a href='10.1007/978-3-540-31832-3_5'>SIMT/OMP: A Toolset to Study and Exploit Memory Locality of OpenMP Applications on NUMA Architectures</a> - WOMPAT 2014
+				</li>
+			</ul>
 		</div>
 		<!--<div class="note">
 			<h3>You want to test other memory tools ?</h3>
