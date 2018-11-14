@@ -43,10 +43,10 @@
 			<h3 id='origin'>Note about origin</h3>
 			<p class='meta'>By Sébastien Valat - Jan 7, 2018</p>
 			<p>NUMAPROF was developed during my postdoc 
-			at CERN in 2017 following a discussion with Othman Bouizi, a research engineer from Exascale Comping Research Lab. It takes back some ideas of the memory profiling tool (MALT) 
+			at CERN in 2017 following a nice discussion with Othman Bouizi, a research engineer from Exascale Comping Research Lab. It takes back some ideas of the memory profiling tool (MALT) 
 			I developed during my previous postdoc at the Exascale Comping Research Lab. During my PhD. I was implemnting a parallel and NUMA aware memory allocator for the MPC framework, and during this period I would have been really happy to have such a tool to check if I made the thing right. The main parts of the tool has been built in two months of work mostly on my free time.
 			
-			<p>With this project I wanted to get some answers to the questions :
+			<p>With this project with Othman we wanted to get some answers to the questions :
 			<ul>
 				<li>"<i>I'm porting my parallel application on a NUMA architecture, do I make remote memory accesses ?</i>"</li>
 				<li>"<i>Which allocations are related to my remote accesses ?</i>"</li> 
@@ -61,7 +61,7 @@
 			<ul>
 				<li>
 					08/2018 -
-					<b><a href='downloads/2018-08-nuaprof-europar-coloc-slides.pdf'>NUMAPROF, A NUMA Profiler</a> [<a href='downloads/2018-09-numaprof-eurpar-coloc-paper.pdf'>paper</a>|<a href='downloads/2018-08-nuaprof-europar-coloc-slides.pdf'>Slides</a>]</b><br/>
+					<b><a href='downloads/2018-08-nuaprof-europar-coloc-slides.pdf'>NUMAPROF, A NUMA Profiler</a> <!--[<a href='downloads/2018-09-numaprof-eurpar-coloc-paper.pdf'>paper</a>|<a href='downloads/2018-08-nuaprof-europar-coloc-slides.pdf'>Slides</a>]--></b><br/>
 					<a href='https://project.inria.fr/coloc/'>Europar/Coloc 2018</a> - Turin
 				</li>
 				<li>
@@ -98,7 +98,7 @@
 			<p>If you want to search knowledge used to build this tool you can refer to the bibliography file into the source code : <b><a target="_blank" href="https://github.com/memtt/numaprof/blob/master/doc/bibliography.md">doc/bibliography.md</a></b>,
 			it contains all the required links to papers, slides, tools, libs, manpages. Fill free to contribute.</p>
 
-			<p>Here the main tools similar to NUMAPROF: </p>
+			<p>Here the main tools similar to NUMAPROF and available: </p>
 
 			<ul>
 				<li>
@@ -117,6 +117,14 @@
 					Report : <a href='https://hal.inria.fr/hal-01202105'>TABARNAC: Tools for Analyzing Behavior of Applications Running on NUMA Architecture.</a><br/>
 					Source code: <a href='https://gitlab.com/dbeniamine/Tabarnac'>Gitlab/dbeniamine/Tabarnac</a>
 				</li>
+				<li>
+					<b>NumaMMA</b><br/>
+					Paper: <a href='https://doi.org/10.1145/3225058.3225094'>NumaMMA: NUMA MeMory Analyzer</a><br/>
+					Github: <a href='https://github.com/numamma/numamma'>https://github.com/numamma/numamma</a>
+				</li>
+			</ul>
+			<p>Papers on tools which I didn't found sources on the web : </p>
+			<ul>
 				<li>
 					<b>MemProf</b><br/>
 					Paper: <a href='https://www.usenix.org/system/files/conference/atc12/atc12-final229.pdf'>MemProf: a Memory Profiler for NUMA Multicore Systems</a> - Usenix ATC'12
@@ -145,45 +153,17 @@
 					<i>Another</i> <b>NUMAPROF</b> <i>(Named only in the paper, not available....)</i><br/>
 					Paper: <a href='https://link.springer.com/chapter/10.1007/978-3-319-27140-8_6'>A Data-Centric Tool to Improve the Performance of Multithreaded Program on NUMA</a>
 				</li>
-				<li>
-					<b>NumaMMA</b><br/>
-					Paper: <a href='https://doi.org/10.1145/3225058.3225094'>NumaMMA: NUMA MeMory Analyzer</a><br/>
-					Github: <a href='https://github.com/numamma/numamma'>https://github.com/numamma/numamma</a>
-				</li>
 			</ul>
+
+			<p>If you want <b>more bibliography</b> on the topic you can find all our cited articles <b><a href='biblio.html'>here</a></b></p>
 		</div>
 		<!--<div class="note">
-			<h3>You want to test other memory tools ?</h3>
-			<p class='meta'>By Sébastien Valat - Sept 28, 2015</p>
-			<p>
-			Of course there are some existing tools on Unix-based platforms for this kind of problem, if ever you find them more interesting than MALT or more adequate to your case (fill free to contact me if I missed some) :
-			</p>
+			<h3>Contributors:</h3>
 			<ul>
-				<li>Profiler provided with google allocator : <a href='https://code.google.com/p/gperftools/wiki/GooglePerformanceTools' target="_blank">Google Heap Profiler</a></li>
-				<li>Valgrind memcheck : <a href='http://valgrind.org/' target="_blank">Valgrind memcheck</a></li>
-				<li>Valgrind massif : <a href='http://valgrind.org/' target="_blank">Valgrind massif</a> with <a href='https://projects.kde.org/projects/extragear/sdk/massif-visualizer'>Massif visualizer</a></li>
-				<li>Dr. Memory : <a href='http://www.drmemory.org/' target="_blank">Dr. Memory</a></li>
-				<li>Commercial tool, <a href='https://www.parasoft.com/product/insure/' target="_blank">Parasoft Insure++</a></li>
-				<li>Commercial tool, <a href='http://unicomsi.com/products/purifyplus/' target="_blank">Unicom PurifyPlus</a> (previously IBM)</li>
-				<li><a href='https://www.cs.uoregon.edu/research/tau/home.php' target="_blank">Tau</a> is more a communication profiling tool for HPC apps, but it offers a <a href='https://www.cs.uoregon.edu/research/tau/docs/old/bk05ch04.html'>memory module</a></li>
-				<li>Similar approach than MALT for the backend : <a href='http://igprof.org/' target="_blank">IgProf</a></li>
-				<li>A debug malloc library : <a href='http://dmalloc.com/' target="_blank">Dmalloc</a></li>
-				<li>Profiling and leak detection : <a href='http://people.redhat.com/otaylor/memprof/' target="_blank">MemProf</a></li>
-				<li><a href='http://panthema.net/2013/malloc_count/' target="_blank">Malloc count</a></li>
-				<li><a href='http://mpatrol.sourceforge.net/' target="_blank">mpatrol</a></li>
-				<li>Tracing tool for parallel programs : <a href='http://eztrace.gforge.inria.fr/' target="_blank">EZTrace</a></li>
-				<li>Find Obsolete Memory : <a href='https://gitlab.cern.ch/fom/FOM-tools/wikis/home'>FOM Tools</a></li>
-			</ul>
-                        <p>If you search some parallel memory allocators, you can find those one on the net:</p>
-                        <ul>
-                                <li><a href='http://www.canonware.com/jemalloc/'>Jemalloc (facebook, firefox)</a></li>
-                                <li><a href='https://github.com/gperftools/gperftools'>TCMalloc (google)</a></li>
-				<li><a href='http://www.hoard.org/'>Hoard</a></li>
-                                <li><a href='http://locklessinc.com/downloads/'>Lockless allocator</a></li>
-				<li><a href='http://mpc.hpcframework.paratools.com/'>MPC</a> memory allocator (look into mpcframework/MPC_Allocator)</li>
-                        </ul>
+				<li><a href='https://svalat.github.io/' target='_bkank'>Sébastien Valat</a> (CERN 2017-2018)</a></li>
+				<li>Original fondating discussion with Othamn Bouizi</li>
+			</ul>			
 		</div>-->
-		
 		<div class='footer'>
 			<div>
 				Copyright © 2018 NUMAPROF. 
