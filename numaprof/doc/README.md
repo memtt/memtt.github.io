@@ -13,6 +13,10 @@ accesss time to compare it to the memory location of the data.
 The tool is currently based on Pintool, a dynamic instrumentation tool from Intel offering a little bit
 the same service than valgrind but supporting threads so faster for parallel applications.
 
+You can find more details and screenshots on the dedicated website: https://memtt.github.io/numaprof/.
+
+![NUMAPROF GUI](https://memtt.github.io/numaprof/images/screenshots/screenshot-6-2.png)
+
 Metrics
 -------
 
@@ -32,9 +36,19 @@ Dependencies
 
 NUMAPROF needs:
 
- * Intel Pintool (required, tested : 3.5) : https://software.intel.com/en-us/articles/pin-a-binary-instrumentation-tool-downloads. Take care of the licence which is free only for non commercial use.
+ * CMake (required to build, greated than 2.8.8) : https://cmake.org/
+ * Intel Pintool (required, tested : 3.16) : https://software.intel.com/en-us/articles/pin-a-binary-instrumentation-tool-downloads. Take care of the licence which is free only for non commercial use.
  * Python (required). To run the webserver.
  * Qt5-webkit (optional, greater than : 5.4). To provide a browser embedded view to use ssh X forward instead of the webserver port forwarding.
+ * libnuma or numactl devel package. This is required to use the profiler.
+
+If you use the git repo (eg. master branch) instead of a release file :
+
+ * NodeJS/npm. To fetch the JavaScript libraries used by the web GUI. If you use a release archive, they already contain all the required JS files so you don't need anymore NodeJS.
+ * Python pip. To download the dependencies of the web server for the web GUI. Again you can use a release archive which already contain all those files.
+
+If you don't have npm and pip on your server, prefer using the release archive which already contain all the required
+libraries and do not depend anymore on those two commands.
 
 Install
 -------
@@ -51,6 +65,10 @@ cd build
 make
 make install
 ```
+
+For those who prefer cmake, the configure is just a wrapper to provide autotools-like semantic and `--help`.
+You can of course call cmake as you want in place of it. Notice the script provide the cmake command if you
+use `--show` option.
 
 Usage
 -----
@@ -131,9 +149,16 @@ skipStackAccesses=true
 threadCacheEntries=512
 objectCodePinned=false
 skipBinaries=
+accessBatchSize=0
 
 [info]
 hidden=false
+
+[cache]
+;can be 'dummy' or 'L1' or 'L1_static'
+type=dummy
+size=32K
+associativity=8
 ```
 
 On huge application
@@ -147,8 +172,63 @@ filtering option at profiling time by using option to remove all entries smaller
 numaprof-pintool -o output:removeSmall=true,output:removeRatio=0.2 ./benchmark --my-option
 ```
 
-Licence
+View on another machine
+-----------------------
+
+If you want to view the NUMAPROF profile on another machine than the one you profiled on, you can
+copy the json file and open it. Ideally the sources need to be placed at the same path than the one
+where you profiled.
+
+If this is not the case you can use the override option of the GUI to redirect some directories :
+
+```sh
+numaprof-webview -o /home/my_server_user/server_path/project:/home/my_local_user/loal_path/project ./numaprof-1234.json
+```
+
+numactl
+-------
+
+If you want to profile an application while using the `numactl` tool to setup the memory binding you need to use
+the command line in given order:
+
+```sh
+numactl {OPTIONS} numaprof-pintool ./MY_APP
+```
+
+Cache simulation
+----------------
+
+NUMAPROF report all the memory accesses to account local/remote/MCDRAM. But this is biased compared to the
+reallity as your processor has CPU caches which reduce a lot the accesses to the RAM. If you want to take
+this into account there is currently a slight cache simulation infrastructure embedded into NUMAOROF.
+It currently only provide one L1 cache per thread (32K by default) with LRU replacement policy.
+This does not match with the multi-level and shared caches of current architectures but can be used
+for example to eliminate spinlocks and access to global variables from the profile as it for sure finish
+in the cache.
+
+Caution, this is currently an **experimental feature**.
+
+You can enable it by using command line option and can optionally change its size using
+the standard way to override config file options via command line (or provide a config file) :
+
+```sh
+numaprof-pintool --cache L1 -o cache:size=32K -o cache:associativity=8 {YOUR_APP}
+```
+
+Pointers:
+---------
+
+If you search pointers about similar tools, interesting related papers, you can refer to the [docs/bibliography.md](https://github.com/memtt/numaprof/blob/master/doc/bibliography.md) file.
+
+License
 -------
 
 Numaprof is distributed under CeCILL-C licence which is LGPL compatible.
 Take care, NUMAPROF currently strongly depend on Intel Pintool which is free only for non commercial use.
+
+I would like to make a port to DynamoRIO to avoid this, if someone want to help !.
+
+Discussion
+----------
+
+You can join the google group to exchange ideas and ask questions : https://groups.google.com/forum/#!forum/memtt-numaprof.
