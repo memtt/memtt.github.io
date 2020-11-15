@@ -7,6 +7,7 @@ function setReadmePage()
 		success : function(text, statut){
 			var mdConverter = new showdown.Converter();
 			var html = mdConverter.makeHtml(text);
+			html = html.replace('<img src="https://memtt.github.io/malt/images/screenshots/screenshot-12.png" alt="MALT GUI" />', '<img src="https://memtt.github.io/malt/images/screenshots/screenshot-12.png" alt="MALT GUI" width="100%"/>');
 			$(".doc-md").html(html);
 		}
 	});

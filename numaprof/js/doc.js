@@ -7,6 +7,7 @@ function setReadmePage()
 		success : function(text, statut){
 			var mdConverter = new showdown.Converter();
 			var html = mdConverter.makeHtml(text);
+			html = html.replace('<img src="https://memtt.github.io/numaprof/images/screenshots/screenshot-6-2.png" alt="NUMAPROF GUI" />', '<img src="https://memtt.github.io/numaprof/images/screenshots/screenshot-6-2.png" alt="NUMAPROF GUI" width="100%"/>');
 			$(".doc-md").html(html);
 		}
 	});
