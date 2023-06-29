@@ -1,8 +1,6 @@
 Numaprof
 ========
 
-[![Build Status](https://travis-ci.org/memtt/numaprof.svg?branch=master)](https://travis-ci.org/memtt/numaprof)
-
 What is it ?
 ------------
 
@@ -37,10 +35,11 @@ Dependencies
 NUMAPROF needs:
 
  * CMake (required to build, greated than 2.8.8) : https://cmake.org/
- * Intel Pintool (required, tested : 3.16) : https://software.intel.com/en-us/articles/pin-a-binary-instrumentation-tool-downloads. Take care of the licence which is free only for non commercial use.
+ * Intel Pintool (required, tested : 3.24) : https://software.intel.com/en-us/articles/pin-a-binary-instrumentation-tool-downloads. Take care of the licence which is free only for non commercial use.
  * Python (required). To run the webserver.
  * Qt5-webkit (optional, greater than : 5.4). To provide a browser embedded view to use ssh X forward instead of the webserver port forwarding.
  * libnuma or numactl devel package. This is required to use the profiler.
+ * Optionnaly you can install google-test and google-mock to avoid the warnings on recent system of the in source embedded version. (tested is 1.11 under ubuntu 22.04).
 
 If you use the git repo (eg. master branch) instead of a release file :
 
@@ -53,7 +52,7 @@ libraries and do not depend anymore on those two commands.
 Install
 -------
 
-First download the last version of pintool (tested : 3.5 on x86_64 arch : https://software.intel.com/en-us/articles/pin-a-binary-instrumentation-tool-downloads) and extract it somewhere.
+First download the last version of pintool (tested : 3.24 on x86_64 arch : https://software.intel.com/en-us/articles/pin-a-binary-instrumentation-tool-downloads) and extract it somewhere.
 TAKE CARE, PINTOOL IS NOT OPEN-SOURCE AND IS FREE ONLY FOR NON-COMMERCIAL USE.
 
 Then use the configure script :
@@ -113,6 +112,18 @@ If you have Qt5-webkit installed you can also automatically open a bowser view b
 numaprof-qt5 numaprof-1234.json
 ```
 
+MPI Support
+-----------
+
+If you want to profile an MPI application you will get a profile per process so at least
+one per rank.
+
+In order to name the files with the given MPI rank instead of the PID you can add the option :
+
+```sh
+mpirun -np 16 numaprof --mpi ./my_program
+```
+
 Kcachgrind compatibility
 ------------------------
 
@@ -159,6 +170,10 @@ hidden=false
 type=dummy
 size=32K
 associativity=8
+
+[mpi]
+useRank=false
+rankVar=auto
 ```
 
 On huge application
