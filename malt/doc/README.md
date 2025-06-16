@@ -9,6 +9,11 @@ What is it
 MALT is a memory tool to find where you allocate your memory. It also provides you some
 statistics about memory usage and help to find memory leaks.
 
+It is done to be used on laguages : C, C++, Fortran, Rust.
+
+Python is also supported but currently as prototype status which needs to be enable with `--enable-python`
+at build time.
+
 ![MALT GUI](https://memtt.github.io/malt/images/screenshots/screenshot-12.png)
 
 Dependencies
@@ -87,11 +92,12 @@ MALT build support several options to define with -D option of CMake :
 
 - `-DENABLE_CODE_TIMING={yes|no}` : Enable quick and dirty function to measure MALT internal
   performances.
-- `-DENABLE_TESTS={yes|no}`        : Enable build of unit tests.
+- `-DENABLE_TESTS={yes|no}`       : Enable build of unit tests.
 - `-DJUNIT_OUTPUT={yes|no}`       : Enable generation of junit files for jenkins integration.
 - `-DENABLE_VALGRIND={yes|no}`    : Run unit tests inside valgrind memcheck and generate XML report.
 - `-DPORTABILITY_OS={UNIX}`       : Set portability build options to fix OS specific calls.
 - `-DPORTABILITY_MUTEX={PTHREAD}` : Set portability build option to select mutex implementation.
+- `-DENABLE_JEMALLOC={yes|no}`    : Enable or disable usage of jemalloc internally to MALT.
 
 Note about Intel Compiler
 -------------------------
@@ -191,6 +197,16 @@ ssh -L 8080:localhost:8080 user@ssh-server
 
 To use the webview you need to install the nodeJS package on your system : <http://nodejs.org/>.
 
+Alternatively you can use a unix socket on the server side and forward it by SSH, it avoids
+to expose the 8080 port to anyone on the server as it is protected by the user access rights.
+
+```shell
+# remote
+malt-webview -p /home/myuser/malt.sock -i malt-PROFILE.json
+# on your workstation
+ssh -L 8080:/home/myuser/malt.sock user@ssh-server
+```
+
 Config
 ------
 
@@ -221,6 +237,8 @@ mode=backtrace        ; select stack tracing mode (backtrace|enter-exit)
 resolve=true          ; Automatically resolve symbols with addr2line at exit.
 libunwind=false       ; Enable of disable usage of libunwind to backtrace.
 skip=4                ; Number of stack frame to skip in order to cut at malloc level
+sampling=false        ; Sample and instrument only some stack.
+samplingBw=4093       ; Instrument the stack when seen passed 4K-3 bytes of alloc requests.
 
 [output]
 name=malt-%1-%2.%3    ; base name for output, %1 = exe, %2 = PID, %3 = extension
@@ -255,6 +273,22 @@ enabled=true          ; Enable or disable MALT when threads start
 on-signal=             ; Dump on signal. Can be comma separated list from SIGINT, SIGUSR1,
                        ; SIGUSR2... help, avail (limited to only one dump)
 after-seconds=0        ; Dump after X seconds (limited to only one time)
+on-sys-full-at=        ; Dump when system memory become full at x%, xG, xM, xK, x  (empty to disable).
+on-app-using-rss=      ; Dump when RSS of the app reach the given limit in %, G, M, K (empty to disable).
+on-app-using-virt=     ; Dump when Virtual Memory of the app reach limit in %, G, M, K (empty to disable).
+on-app-using-req=      ; Dump when Requested Memory of the app reach limit in %, G, M, K (empty to disable).
+on-thread-stack-using= ; Dump when one stack reach limit in %, G, M, K (empty to disable).
+on-alloc-count=        ; Dump when number of allocations reach limit in G, M, K (empty to disable).
+watch-dog=false        ; Run an active thread spying continuouly the memory of the app, not only sometimes.
+
+[python]
+instru=true            ; Enable of disable python instrumentation.
+stack=enter-exit       ; Select the Python stack instrumentation mode (backtrace, enter-exit, none).
+mix=false              ; Mix C stack with the python ones to get a uniq tree instread of two distincts
+                       ;(not this adds overhead).
+obj=true               ; Instrument of not the OBJECT allocator domain of python.
+mem=true               ; Instrument of not the MEM allocator domain of python.
+raw=true               ; Instrument of not the RAW allocator domain of python.
 ```
 
 Option values can be overridden on the fly with command :
@@ -433,6 +467,45 @@ export MANPATH=${PREFIX}/share/man:$MANPATH
 `LD_LIBRARY_PATH` is not required as the `malt` command will use the full path to get access the
 internal `.so` file.
 
+Profiling python
+----------------
+
+**Note:** This is currently **experimental**.
+
+First you need to build MALT by enabling python support : `--enable-python` and you will need to have
+the python headers (package `python3-dev or libpython3-dev or python3-devel`) on your plateform.
+
+In practice MALT after being built will be able to run over various versions of python without beeing
+rebuilt as long as they follow the standard API which is currently stable. It should also work on the
+python delivered by [Anaconda](https://www.anaconda.com/).
+
+Supported version are currently python from **version 11**.
+
+Due to large number of memory allocations in python MALT currently have a large overhead over python.
+There is in consequence several way to instrument your app which I sort in overhead increasing order.
+
+```bash
+# Use default mode (python-only)
+malt-python ./script.py
+# profile without stacks
+malt-python --profile python-no-stack ./script.py
+# An approximativ method by sampling instead of tracking each stack (faster but not exact)
+malt-python --profile python-sampling ./script.py
+# Similar but with less samples
+malt-python --profile python-sampling-10M ./script.py
+# Similar but with less and less samples
+malt-python --profile python-sampling-20M ./script.py
+# profile considering only python stacks (C is mapped under python)
+malt-python --profile python-only ./script.py
+# Full instrumentation of Python + C
+malt-python --profile python-full ./script.py
+```
+
+**Note**: The `malt-python` is just a wrapper over `malt` command profiding a different default
+profile sepcific for python, you can also use directly the `malt` command.
+
+**Note**: The `malt-python` command is a temporary workaround, it might disapear in future.
+
 Similar tools
 -------------
 
@@ -457,6 +530,7 @@ If you search similar tools all over the web you might find:
 - Tracing tool for parallel programs: [EZTrace](http://eztrace.gforge.inria.fr/)
 - Find Obsolete Memory: [FOM Tools](https://gitlab.cern.ch/fom/FOM-tools/wikis/home)
 - Memray: A memory profiler support C & python. <https://bloomberg.github.io/memray/>
+- Scalene: A perf and memory profiler for C & python : <https://pypi.org/project/scalene/>
 
 If ever I missed new ones, you can also look on the repos of this person keeping an up-to-date list:
 <https://github.com/MattPD/cpplinks/blob/master/performance.tools.md>
@@ -471,6 +545,7 @@ If you search some parallel memory allocators, you can find those one on the net
 - [Hoard](http://www.hoard.org/)
 - [Lockless allocator](http://locklessinc.com/downloads/)
 - [MPC](http://mpc.hpcframework.paratools.com/) memory allocator (look into mpcframework/MPC_Allocator)
+- [mimalloc](https://github.com/microsoft/mimalloc)
 
 License
 -------
