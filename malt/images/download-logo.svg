@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="67.716248mm"
+   height="67.862549mm"
+   viewBox="0 0 67.716248 67.862549"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="download-logo.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.3986392"
+     inkscape:cx="283.48984"
+     inkscape:cy="106.17463"
+     inkscape:window-width="1854"
+     inkscape:window-height="1011"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <marker
+       style="overflow:visible"
+       id="TriangleStart"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="TriangleStart"
+       markerWidth="5.3244081"
+       markerHeight="6.155385"
+       viewBox="0 0 5.3244081 6.1553851"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135" />
+    </marker>
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter1984"
+       x="-0.021862326"
+       y="-0.021862326"
+       width="1.0437247"
+       height="1.0437247">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.58441548"
+         id="feGaussianBlur1986" />
+    </filter>
+  </defs>
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-79.966537,-55.062347)">
+    <circle
+       style="opacity:0.727496;fill:#808080;stroke-width:0.264583;filter:url(#filter1984)"
+       id="path111-3"
+       cx="114.20224"
+       cy="89.444351"
+       r="32.07795" />
+    <circle
+       style="fill:#5599ff;stroke-width:0.264583"
+       id="path111"
+       cx="112.04449"
+       cy="87.140297"
+       r="32.07795" />
+    <path
+       style="fill:#ffffff;stroke:#ffffff;stroke-width:4.565;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleStart)"
+       d="M 112.04449,67.284506 V 90.785432"
+       id="path323"
+       sodipodi:nodetypes="cc" />
+    <rect
+       style="fill:#ffffff;stroke:none;stroke-width:4.465;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1901"
+       width="9.8458099"
+       height="16.229622"
+       x="107.03883"
+       y="67.043732" />
+  </g>
+</svg>

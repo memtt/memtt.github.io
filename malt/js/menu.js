@@ -2,6 +2,7 @@ $(document).ready(function() {
 	//define
 	var menuEntries = [
 		{title: 'Home', url: 'index.html'},
+		{title: 'Download', url: 'download.html'},
 		{title: 'Screens',url: 'screens.html'},
 		{title: 'Features', url: 'features.html'},
 		{title: 'Doc',url: 'doc.html'},

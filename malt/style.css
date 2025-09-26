@@ -601,3 +601,21 @@ body {
 	width: 60px;
 	height: 60px;
 }
+
+/******************************** DOWNLOAD ARRAY *************************************/
+table.downloads {
+	width: 100%;
+}
+
+table.downloads th {
+	text-align: center;
+}
+
+table.downloads td {
+	text-align: center;
+}
+
+table.downloads, table.downloads td, table.downloads th {
+	border: solid 1px black;
+	border-collapse: collapse;
+}
