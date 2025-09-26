@@ -22,12 +22,14 @@ Dependencies
 MALT depends on the presence of :
 
 - binutils (nm and add2line) to extract symbols. Tested version is 2.24 - 2.38.
+- openssl (libssl.so) to run the C++ webview. Tested version is 3.0.13.
 
 It optionally depends on :
 
 - nodejs (<http://nodejs.org/>) to run the webview GUI. Tested version is 0.10.30 - 12.22.9.
 - libelf (<http://www.mr511.de/software/english.html>) to extract global variable list from executables and libs. Tested version is 0.128 - 0.183.
 - libunwind (<http://www.nongnu.org/libunwind/>) as an alternative implementation of glibc backtrace method. Tested version is 1.1 - 1.3.2.
+- libpython (<https://www.python.org/>) if enabling python support. Tested version is 3.11 - 3.13.
 
 Supported system (known):
 
@@ -176,7 +178,7 @@ Using webview
 You can use the webview by calling command `malt-webview` as :
 
 ```shell
-malt-webview [-p PORT] [--no-auth] -i malt-YOUR_PROGRAM-1234.json
+malt-webview [-p PORT] [--no-auth] malt-YOUR_PROGRAM-1234.json
 ```
 
 It will open a server listening locally on port 8080 so you can open your web browser
@@ -195,14 +197,12 @@ If you are running the view remotely thought SSH you can redirect the ports by u
 ssh -L 8080:localhost:8080 user@ssh-server
 ```
 
-To use the webview you need to install the nodeJS package on your system : <http://nodejs.org/>.
-
 Alternatively you can use a unix socket on the server side and forward it by SSH, it avoids
 to expose the 8080 port to anyone on the server as it is protected by the user access rights.
 
 ```shell
 # remote
-malt-webview -p /home/myuser/malt.sock -i malt-PROFILE.json
+malt-webview -p /home/myuser/malt.sock malt-PROFILE.json
 # on your workstation
 ssh -L 8080:/home/myuser/malt.sock user@ssh-server
 ```
@@ -268,6 +268,7 @@ hidden=false          ; try to hide possible sensible names from profile (exe, h
 exe=                  ; Only apply malt on given exe (empty for all)
 childs=true           ; Instrument child processes or not
 enabled=true          ; Enable or disable MALT when threads start
+ranks=                ; Instrument only the given ranks from list as : 1,2-4,6
 
 [dump]
 on-signal=             ; Dump on signal. Can be comma separated list from SIGINT, SIGUSR1,
@@ -289,6 +290,10 @@ mix=false              ; Mix C stack with the python ones to get a uniq tree ins
 obj=true               ; Instrument of not the OBJECT allocator domain of python.
 mem=true               ; Instrument of not the MEM allocator domain of python.
 raw=true               ; Instrument of not the RAW allocator domain of python.
+
+[tools]
+nm=true                ; Enable usage of NM to find the source locatoin of the global variables.
+nmMaxSize=50M           ; Do not call nm on .so larger than 50 MB to limit the profile dump overhead.
 ```
 
 Option values can be overridden on the fly with command :
@@ -423,29 +428,6 @@ MALT can also use binary instrumentation with MAQAO (<http://maqao.org/>).
 
 Please check usage into src/maqao directory.
 
-Dealing with big files
-----------------------
-
-In some cases you might get really big files. I get up to 600 MB on one code. The issue is that you
-cannot load this kind of file into nodejs due to some limits into the string used to read the file
-into json parsor functions.
-
-The first alternative is to try to generate more compressed file by enabling usage of `stackTree` output
-options to store the stacks as a tree into the file. It is more efficient in terms of space (in the 600 MB
-case it lower the file to 200 MB) but need an on-fly conversion by the server to get back the supported format.
-
-```shell
-malt -o "output:stackTree=true" ./PROGRAM
-```
-
-Currently you can still find cases where you cannot load the file into nodejs, I'm working on a workaround.
-Please provide me your files if it appends. By compressing it in gzip you will get less than 30-40 MB.
-
-As of 25/07/2024, the JSON are read and processed using streams, and thus, we by-pass the internal hard limit of NodeJs requiring string to be < 512 MB.
-However, keep in mind that such big files makes the web interface a bit less responsive. This was tested with files up to 1 GB.
-
-Due to another limitations, you may encounter the following error `FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory`. You want to modify the heap size limit of nodeJs, with the following options `NODE_OPTIONS="--max-old-space-size=<SIZE>"` with `SIZE` in megabytes.
-
 Packaging
 ---------
 
@@ -489,6 +471,8 @@ There is in consequence several way to instrument your app which I sort in overh
 malt-python ./script.py
 # profile without stacks
 malt-python --profile python-no-stack ./script.py
+# Get C and Python stack as two distinct domains (not mixed)
+malt-python --profile python-domains ./script.py
 # An approximativ method by sampling instead of tracking each stack (faster but not exact)
 malt-python --profile python-sampling ./script.py
 # Similar but with less samples
@@ -529,7 +513,7 @@ If you search similar tools all over the web you might find:
 - [mpatrol](http://mpatrol.sourceforge.net/)
 - Tracing tool for parallel programs: [EZTrace](http://eztrace.gforge.inria.fr/)
 - Find Obsolete Memory: [FOM Tools](https://gitlab.cern.ch/fom/FOM-tools/wikis/home)
-- Memray: A memory profiler support C & python. <https://bloomberg.github.io/memray/>
+- Memray: A memory profiler support python. <https://bloomberg.github.io/memray/>
 - Scalene: A perf and memory profiler for C & python : <https://pypi.org/project/scalene/>
 
 If ever I missed new ones, you can also look on the repos of this person keeping an up-to-date list:
@@ -544,7 +528,7 @@ If you search some parallel memory allocators, you can find those one on the net
 - [TCMalloc (google)](https://github.com/gperftools/gperftools)
 - [Hoard](http://www.hoard.org/)
 - [Lockless allocator](http://locklessinc.com/downloads/)
-- [MPC](http://mpc.hpcframework.paratools.com/) memory allocator (look into mpcframework/MPC_Allocator)
+- [MPC](https://github.com/cea-hpc/mpc-allocator) memory allocator from Multi-Processor Computing framework.
 - [mimalloc](https://github.com/microsoft/mimalloc)
 
 License
