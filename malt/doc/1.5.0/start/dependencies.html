@@ -1,0 +1,279 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dependencies &mdash; MALT 1.4.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/./custom.css?v=f0082309" />
+
+  
+    <link rel="shortcut icon" href="../_static/ico.png"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=350a9c04"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Installation" href="installation.html" />
+    <link rel="prev" title="MALT documentation" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            MALT
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Dependencies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#required-dependencies">Required dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#optional-dependencies">Optional dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embeded-dependencies">Embeded dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nodejs-dependencies">NodeJS dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dependencies-for-the-git-repo">Dependencies for the GIT repo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dependencies-in-distributions">Dependencies in distributions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#debian-ubuntu">Debian / Ubuntu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fedora-rocky">Fedora / Rocky</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#archlinux">Archlinux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gentoo">Gentoo</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic-usage.html">Basic usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Understanding the metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="infos.html">Informations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced topics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/mpi.html">MPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/custom-allocs.html">Using custom allocator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/sub-part.html">Sub-part of a program</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/finstrum.html">Using -finstrument-functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/track-oom.html">Track out of memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/options.html">Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/build-options.html">Build options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/packaging.html">Packaging for distributions</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">External pointers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../external/other-tools.html">Other tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../external/other-allocators.html">Other memory allocators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../external/documentation.html">Documentation about memory</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MALT</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Dependencies</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/start/dependencies.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="dependencies">
+<h1>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading"></a></h1>
+<p>Here are the dependencies for <strong>building</strong> from source and <strong>running</strong> MALT.</p>
+<section id="required-dependencies">
+<h2>Required dependencies<a class="headerlink" href="#required-dependencies" title="Link to this heading"></a></h2>
+<p>The dependencies of MALT are the following if you use the <strong>official releases</strong> which embed some extra files compared to the <strong>GIT repository</strong>:</p>
+<dl class="simple">
+<dt><a class="reference external" href="https://www.gnu.org/software/binutils/">Binutils</a></dt><dd><ul class="simple">
+<li><p>2.24 - 2.38</p></li>
+<li><p>Required for the <strong>nm</strong> and <strong>addr2line</strong> tools to solve the symbols and get the global variables informations.</p></li>
+</ul>
+</dd>
+<dt><a class="reference external" href="https://cmake.org/">CMake</a></dt><dd><ul class="simple">
+<li><p>2.8 - 3.28.3</p></li>
+<li><p>Required to <strong>build</strong> MALT from source.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="optional-dependencies">
+<h2>Optional dependencies<a class="headerlink" href="#optional-dependencies" title="Link to this heading"></a></h2>
+<p>Those dependencies are not required but will permit to <strong>enable some features</strong> support of MALT.</p>
+<dl class="simple">
+<dt><a class="reference external" href="http://www.mr511.de/software/english.html">libelf</a></dt><dd><ul class="simple">
+<li><p>0.128 - 0.183</p></li>
+<li><p>To extract <strong>global variables</strong> list from executables and libraries.</p></li>
+</ul>
+</dd>
+<dt><a class="reference external" href="http://www.nongnu.org/libunwind/">libunwind</a></dt><dd><ul class="simple">
+<li><p>3.11 - 3.13</p></li>
+<li><p>An alternative implementation of glibc <strong>backtrace</strong> method</p></li>
+</ul>
+</dd>
+<dt><a class="reference external" href="https://www.python.org/">libpython</a></dt><dd><ul class="simple">
+<li><p>3.11 - 3.14</p></li>
+<li><p>To activate the support of <strong>Python</strong> language in MALT.</p></li>
+</ul>
+</dd>
+<dt><a class="reference external" href="https://graphviz.org/">Graphviz</a></dt><dd><ul class="simple">
+<li><p>2.42.2</p></li>
+<li><p>To activate the <strong>call graph rendering</strong> in the webview via the <strong>dot</strong> command.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="embeded-dependencies">
+<h2>Embeded dependencies<a class="headerlink" href="#embeded-dependencies" title="Link to this heading"></a></h2>
+<p>Some dependencies are <strong>embeded</strong> into the GIT repository to ease installation of MALT because
+most of the time not present by default on available systems. <strong>If present</strong> MALT will use the
+<strong>system version</strong>.</p>
+<dl class="simple">
+<dt><a class="reference external" href="https://raw.githubusercontent.com/yhirose/cpp-httplib">httplib</a></dt><dd><ul class="simple">
+<li><p>0.23.1</p></li>
+<li><p>To implement the C++ based <strong>webview server</strong> REST API.</p></li>
+</ul>
+</dd>
+<dt><a class="reference external" href="https://google.github.io/googletest/">GoogleTest</a></dt><dd><ul class="simple">
+<li><p>1.14.0</p></li>
+<li><p>To build and run the MALT <strong>unit tests</strong>.</p></li>
+</ul>
+</dd>
+<dt><a class="reference external" href="https://github.com/nlohmann/json">Nlohmann-json</a></dt><dd><ul class="simple">
+<li><p>3.12.0</p></li>
+<li><p>Use to decode / encoder the <strong>JSON</strong> data in the <strong>webview</strong>.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="nodejs-dependencies">
+<h2>NodeJS dependencies<a class="headerlink" href="#nodejs-dependencies" title="Link to this heading"></a></h2>
+<p>The <strong>webview</strong> is based on the <cite>VueJS</cite> framework, so it requires some dependencies
+for <strong>NodeJS</strong> in order to be built.</p>
+<p>The CMake script automatically <strong>download</strong> them if you are using the <strong>git</strong> repository
+as it does not contains those dependencies.</p>
+<p>The <strong>official release archive</strong> embed them and contains a pre-build version of the webview
+so you do not requires <strong>NodeJS</strong> / <strong>NPM</strong> nor the <strong>node_modules</strong> to get it running on
+your system.</p>
+</section>
+<section id="dependencies-for-the-git-repo">
+<h2>Dependencies for the GIT repo<a class="headerlink" href="#dependencies-for-the-git-repo" title="Link to this heading"></a></h2>
+<p>If you want to use the <strong>GIT repository</strong> you might also need some extra
+dependences to get some files not embeded in not embeded into the
+<strong>GIT repository</strong> but present in the <strong>officiel release archive</strong> :</p>
+<dl class="simple">
+<dt><a class="reference external" href="https://nodejs.org">NodeJS</a></dt><dd><ul class="simple">
+<li><p>0.10.30 - 12.22.9</p></li>
+<li><p>Required if you want to download the <strong>interface dependences</strong> via <strong>npm</strong> which are packed into the officiel release.</p></li>
+</ul>
+</dd>
+<dt><a class="reference external" href="https://curl.se/download.html">Curl</a></dt><dd><ul class="simple">
+<li><p>8.5.0</p></li>
+<li><p>Required to <strong>download</strong> the sources of <strong>JeMalloc</strong> memory allocator. Those sources are packed in the the official release.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="dependencies-in-distributions">
+<h2>Dependencies in distributions<a class="headerlink" href="#dependencies-in-distributions" title="Link to this heading"></a></h2>
+<p>If you want to install the dependencies provided by your system you can easily use the following commands.</p>
+<section id="debian-ubuntu">
+<h3>Debian / Ubuntu<a class="headerlink" href="#debian-ubuntu" title="Link to this heading"></a></h3>
+<p>If you are using an <strong>APT</strong> based distribution derivated from <strong>Debian</strong> you can use :</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>cmake<span class="w"> </span>g++<span class="w"> </span>make<span class="w"> </span>libssl-dev<span class="w"> </span>libunwind-dev<span class="w"> </span><span class="se">\</span>
+<span class="w">                 </span>libelf-dev<span class="w"> </span>libunwind-dev<span class="w"> </span>nodejs<span class="w"> </span>npm<span class="w"> </span><span class="se">\</span>
+<span class="w">                 </span>nlohmann-json3-dev<span class="w"> </span>graphviz<span class="w"> </span>python3-dev<span class="w"> </span>curl
+</pre></div>
+</div>
+</section>
+<section id="fedora-rocky">
+<h3>Fedora / Rocky<a class="headerlink" href="#fedora-rocky" title="Link to this heading"></a></h3>
+<p>If you are using an <strong>RPM</strong> based distribution derivated from <strong>Fedora</strong> you can use :</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>cmake<span class="w"> </span>gcc-c++<span class="w"> </span>make<span class="w"> </span><span class="se">\</span>
+<span class="w">                    </span>openssl-devel<span class="w"> </span>elfutils-libelf-devel<span class="w"> </span><span class="se">\</span>
+<span class="w">                    </span>nodejs<span class="w"> </span>npm<span class="w"> </span>curl<span class="w"> </span>bzip2<span class="w"> </span>xz<span class="w"> </span>graphviz<span class="w"> </span>python3-devel
+</pre></div>
+</div>
+</section>
+<section id="archlinux">
+<h3>Archlinux<a class="headerlink" href="#archlinux" title="Link to this heading"></a></h3>
+<p>If you are using <strong>Archlinux</strong> :</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pacman<span class="w"> </span>-Sy<span class="w"> </span>cmake<span class="w"> </span>gcc<span class="w"> </span>make<span class="w"> </span>openssl<span class="w"> </span><span class="se">\</span>
+<span class="w">           </span>libunwind<span class="w"> </span>libelf<span class="w"> </span>nodejs<span class="w"> </span>npm<span class="w"> </span>curl<span class="w"> </span><span class="se">\</span>
+<span class="w">           </span>nlohmann-json<span class="w"> </span>graphviz<span class="w"> </span>python3
+</pre></div>
+</div>
+</section>
+<section id="gentoo">
+<h3>Gentoo<a class="headerlink" href="#gentoo" title="Link to this heading"></a></h3>
+<p>If you are using <strong>Gentoo</strong> :</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>emerge<span class="w"> </span>cmake<span class="w"> </span>gcc<span class="w"> </span>make<span class="w"> </span>openssl<span class="w"> </span>sys-libs/libunwind<span class="w"> </span>elfutils<span class="w"> </span><span class="se">\</span>
+<span class="w">       </span>nodejs<span class="w"> </span>curl<span class="w"> </span>dev-cpp/nlohmann_json<span class="w"> </span>media-gfx/graphviz
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="MALT documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Sébastien Valat.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

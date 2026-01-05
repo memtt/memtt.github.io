@@ -1,0 +1,209 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Installation &mdash; MALT 1.4.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/./custom.css?v=f0082309" />
+
+  
+    <link rel="shortcut icon" href="../_static/ico.png"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=350a9c04"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Basic usage" href="basic-usage.html" />
+    <link rel="prev" title="Dependencies" href="dependencies.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            MALT
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="dependencies.html">Dependencies</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#compiling">Compiling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#note-about-intel-compiler">Note about Intel Compiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation-in-non-standard-directory">Installation in non-standard directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-via-spack">Installing via spack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-via-gentoo-overlay">Installing via Gentoo Overlay</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#building-distribution-packages">Building distribution packages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="basic-usage.html">Basic usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Understanding the metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="infos.html">Informations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced topics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/mpi.html">MPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/custom-allocs.html">Using custom allocator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/sub-part.html">Sub-part of a program</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/finstrum.html">Using -finstrument-functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/track-oom.html">Track out of memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/options.html">Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/build-options.html">Build options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/packaging.html">Packaging for distributions</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">External pointers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../external/other-tools.html">Other tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../external/other-allocators.html">Other memory allocators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../external/documentation.html">Documentation about memory</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MALT</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Installation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/start/installation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h1>
+<section id="compiling">
+<h2>Compiling<a class="headerlink" href="#compiling" title="Link to this heading"></a></h2>
+<p>To <strong>compile</strong> MALT, simply use :</p>
+<p>If you are using <strong>Gentoo</strong> :</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>build
+<span class="nb">cd</span><span class="w"> </span>build
+../configure<span class="w"> </span>--prefix<span class="o">=</span><span class="nv">$HOME</span>/usr-malt
+make<span class="w"> </span>-j8
+make<span class="w"> </span>install
+</pre></div>
+</div>
+<p>Note that the <strong>configure</strong> script is just a <strong>wrapper</strong> with the <strong>configure</strong> classic semantic on top of <strong>cmake</strong>, so
+you can also call directly <strong>cmake</strong>:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>build
+<span class="nb">cd</span><span class="w"> </span>build
+cmake<span class="w"> </span>-DCMAKE_INSTALL_PREFIX<span class="o">=</span><span class="nv">$HOME</span>/usr-malt<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release
+make<span class="w"> </span>-j8
+make<span class="w"> </span>install
+</pre></div>
+</div>
+</section>
+<section id="note-about-intel-compiler">
+<h2>Note about Intel Compiler<a class="headerlink" href="#note-about-intel-compiler" title="Link to this heading"></a></h2>
+<p>MALT is written in C++ so you might possibly encounterd some issue with you build it with GCC and
+profile applications built with Intel Compiler. In most cases it should work out of the box without
+any issues.</p>
+<p>But, I got once an error report about that. In that case, try to compile MALT also with intel compiler
+instead if GCC to match the app :</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># with the configure script</span>
+../configure<span class="w"> </span><span class="nv">CC</span><span class="o">=</span>icc<span class="w"> </span><span class="nv">CXX</span><span class="o">=</span>icpc
+make
+
+<span class="c1"># with the cmake script directly</span>
+cmake<span class="w"> </span>-DCMAKE_C_COMPILER<span class="o">=</span>icc<span class="w"> </span>-DCMAKE_CXX_COMPILER<span class="o">=</span>icpc
+</pre></div>
+</div>
+</section>
+<section id="installation-in-non-standard-directory">
+<h2>Installation in non-standard directory<a class="headerlink" href="#installation-in-non-standard-directory" title="Link to this heading"></a></h2>
+<p>If you install MALT in a directory other than <cite>/usr</cite> and <cite>/usr/local</cite>, eg. in your home, you might
+be interested by setting some environment variables integrating it to your shell :</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">PREFIX</span><span class="si">}</span>/bin:<span class="nv">$PATH</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">MANPATH</span><span class="o">=</span><span class="si">${</span><span class="nv">PREFIX</span><span class="si">}</span>/share/man:<span class="nv">$MANPATH</span>
+</pre></div>
+</div>
+<p><cite>LD_LIBRARY_PATH</cite> is not required as the <cite>malt</cite> command will use the full path to get access the
+internal <cite>.so</cite> file.</p>
+</section>
+<section id="installing-via-spack">
+<h2>Installing via spack<a class="headerlink" href="#installing-via-spack" title="Link to this heading"></a></h2>
+<p>If you are using <a class="reference external" href="https://spack.io/">Spack</a> you can simply use it to build the <strong>dependencies</strong> and <strong>MALT</strong> :</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./bin/spack<span class="w"> </span>install<span class="w"> </span>malt
+</pre></div>
+</div>
+</section>
+<section id="installing-via-gentoo-overlay">
+<h2>Installing via Gentoo Overlay<a class="headerlink" href="#installing-via-gentoo-overlay" title="Link to this heading"></a></h2>
+<p>On Gentoo you can also directly install MALT by using the given <strong>overleay</strong> :</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>eselect<span class="w"> </span>repository<span class="w"> </span>add<span class="w"> </span>memtt<span class="w"> </span>git<span class="w"> </span>https://github.com/memtt/gentoo-memtt-overlay.git
+sudo<span class="w"> </span>eselect<span class="w"> </span>repository<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>memtt
+sudo<span class="w"> </span>emerge<span class="w"> </span>-a<span class="w"> </span>malt
+</pre></div>
+</div>
+</section>
+<section id="building-distribution-packages">
+<h2>Building distribution packages<a class="headerlink" href="#building-distribution-packages" title="Link to this heading"></a></h2>
+<p>MALT provide the files necessary to produce the <strong>APT</strong> and <strong>RPM</strong> packages, you will
+find the procedure to use them in the <a class="reference internal" href="../advanced/packaging.html#packaging"><span class="std std-ref">advanced section</span></a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="dependencies.html" class="btn btn-neutral float-left" title="Dependencies" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="basic-usage.html" class="btn btn-neutral float-right" title="Basic usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Sébastien Valat.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
