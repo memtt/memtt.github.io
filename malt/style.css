@@ -227,10 +227,10 @@ body {
 .index-header .index-screenshot span {
 	margin:60px 0px;
 	display: block;
-	height:400px;
+	height:500px;
 	width:860px;
-	background-image:url("images/screenshots/screenshot-12.png");
-	background-size: 860px 400px;
+	background-image:url("images/screenshots/v1.5/screenshot-05.png");
+	background-size: 860px 500px;
 	border-radius:5px;
 	box-shadow: 0px 14px 12px -10px rgba(0,8,26,0.32);
 	box-sizing:border-box;
