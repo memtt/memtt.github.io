@@ -137,6 +137,8 @@
 			of instrumenting Python for <b>MALT</b>.
 			<p>From this I obtained a way to finance myself to get a real operational port in <b>2025</b> at <b><a href='https://www.inria.fr/'>INRIA</a></b> via the <b><a href='https://pole-universitaire-innovation.univ-grenoble-alpes.fr/'>PUI (Pôle Universitaire d'Innovation) Grenoble Alpes</a></b> thanks to the help of the <b>STIP</b> service from INRIA.</p>
 			<p>This was a lot of efforts to extend MALT and to get decent performances so I can release it starting to work well in version <b>1.5.0</b>.</p>
+			<p>During this work, the webview server was rewritten in C++ instead of relying on NodeJS. It permits to get ride of NodeJS in release mode (when the webview is pre-built)
+			and to get faster response which is required for Python. It now also open the door to rewrite some other extra interfaces in Curses for example (I dream).</p>
 			<p>This was also the chance to rewrite in a proper way the graphical interface in VueJS by opposition to now old Angular 2.0 of original version of MALT.
 			This work was done by <b>Florian Petit</b> and <b>Emeric Guyon</b> who did a nice job for this rewritting. This is also released with the version 1.5.0.</p>
 			<p>Last point, thanks to INRIA and this way to be financed there is now also a nice <b><a href='./doc/latest/index.html'>documentation</a></b> on the usage of MALT, documentation which was missing in the past.</p>
