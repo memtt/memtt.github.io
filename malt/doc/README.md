@@ -9,7 +9,7 @@ statistics about memory usage and help to find memory leaks.
 
 It is done to be used on laguages : **C**, **C++**, **Fortran**, **Rust** and **Python**.
 
-![MALT GUI](./screenshot.png)
+<img src='./screenshot.png' alt="Screenshot" width="100%"/>
 
 Documentation
 -------------
