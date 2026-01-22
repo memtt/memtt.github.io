@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Packaging for distributions &mdash; MALT 1.4.1 documentation</title>
+  <title>Packaging for distributions &mdash; MALT 1.5.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/./custom.css?v=f0082309" />
@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="../_static/ico.png"/>
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=350a9c04"></script>
+      <script src="../_static/documentation_options.js?v=e0a75244"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
@@ -75,6 +75,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../external/other-allocators.html">Other memory allocators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../external/documentation.html">Documentation about memory</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">For developpers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../developer/debug.html">How to debug MALT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/lifecycle.html">MALT project lifecycle</a></li>
+</ul>
 
         </div>
       </div>
@@ -112,7 +117,7 @@ You will find here the procedure to follow to build them.</p>
 <li><p><strong>Generate</strong> the release tarball.</p></li>
 </ul>
 <p>To generate from the <strong>git sources</strong> :</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./dev/dev.py<span class="w"> </span>archive<span class="w"> </span>--commit<span class="w"> </span>v1.4.0<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.4.0<span class="w"> </span>--no-hash
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./dev/dev.py<span class="w"> </span>archive<span class="w"> </span>--commit<span class="w"> </span>v1.5.0<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.5.0<span class="w"> </span>--no-hash
 </pre></div>
 </div>
 </section>
@@ -131,13 +136,13 @@ sudo<span class="w"> </span>emerge<span class="w"> </span>-a<span class="w"> </s
 <p>If you want to build your package for Fedora or related RPM based distribution,
 you can follow the given commands.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extract the packging dir if you are not in git sources</span>
-tar<span class="w"> </span>--strip-components<span class="w"> </span><span class="m">1</span><span class="w"> </span>-xvf<span class="w"> </span>malt-1.4.0.tar.bz2<span class="w"> </span>malt-1.4.0/packaging/fedora
+tar<span class="w"> </span>--strip-components<span class="w"> </span><span class="m">1</span><span class="w"> </span>-xvf<span class="w"> </span>malt-1.5.0.tar.bz2<span class="w"> </span>malt-1.5.0/packaging/fedora
 
 <span class="c1"># build the podman image</span>
 podman<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>malt/fedora-rpmbuild<span class="w"> </span>-f<span class="w"> </span>packaging/fedora/Dockerfile
 
 <span class="c1"># Call the script inside docker</span>
-podman<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-ti<span class="w"> </span>-v<span class="w"> </span>.:/sources:rw<span class="w"> </span>malt/fedora-rpmbuild<span class="w"> </span>/sources/packaging/fedora/build.sh<span class="w"> </span><span class="m">1</span>.4.0
+podman<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-ti<span class="w"> </span>-v<span class="w"> </span>.:/sources:rw<span class="w"> </span>malt/fedora-rpmbuild<span class="w"> </span>/sources/packaging/fedora/build.sh<span class="w"> </span><span class="m">1</span>.5.0
 </pre></div>
 </div>
 </section>
@@ -146,13 +151,13 @@ podman<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </
 <p>If you want to build your package for Debian, Ubuntu or related APT based distributions,
 you can follow the given commands.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extract the packging dir if you are not in git sources</span>
-tar<span class="w"> </span>--strip-components<span class="w"> </span><span class="m">1</span><span class="w"> </span>-xvf<span class="w"> </span>malt-1.4.0.tar.bz2<span class="w"> </span>malt-1.4.0/packaging/debian
+tar<span class="w"> </span>--strip-components<span class="w"> </span><span class="m">1</span><span class="w"> </span>-xvf<span class="w"> </span>malt-1.5.0.tar.bz2<span class="w"> </span>malt-1.5.0/packaging/debian
 
 <span class="c1"># build the podman image</span>
 podman<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>malt/debian-debbuild<span class="w"> </span>-f<span class="w"> </span>packaging/debian/Dockerfile
 
 <span class="c1"># Call the script inside docker</span>
-podman<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-ti<span class="w"> </span>-v<span class="w"> </span>.:/sources:rw<span class="w"> </span>malt/debian-debbuild<span class="w"> </span>/sources/packaging/debian/build.sh<span class="w"> </span><span class="m">1</span>.4.0
+podman<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-ti<span class="w"> </span>-v<span class="w"> </span>.:/sources:rw<span class="w"> </span>malt/debian-debbuild<span class="w"> </span>/sources/packaging/debian/build.sh<span class="w"> </span><span class="m">1</span>.5.0
 </pre></div>
 </div>
 </section>
