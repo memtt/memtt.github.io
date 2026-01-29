@@ -7,7 +7,6 @@ $(document).ready(function() {
 		{title: 'Features', url: 'features.html'},
 		{title: 'Doc',url: 'doc.html'},
 		{title: 'Notes', url: 'notes.html'},
-		{title: 'Contribute', url: 'contrib.html'},
 		{title: 'MemTT', url: '../index.html'},
 	];
 	
