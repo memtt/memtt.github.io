@@ -1,0 +1,643 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Understanding the metrics &mdash; MALT 1.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/./custom.css?v=f0082309" />
+
+  
+    <link rel="shortcut icon" href="../_static/ico.png"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=72d88caf"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Informations" href="infos.html" />
+    <link rel="prev" title="Static report" href="static-report.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            MALT
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="dependencies.html">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic-usage.html">Basic usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="static-report.html">Static report</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Understanding the metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#reminder-on-memory">Reminder on Memory</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#global-variables">Global variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#thread-local-storage-tls">Thread Local Storage (TLS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stacks">Stacks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mmap">mmap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#malloc">malloc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#metrics">Metrics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#allocated-memory">Allocated memory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#allocated-count">Allocated count</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#min-alloc-size">Min. alloc size</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#max-alloc-size">Max. alloc size</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#freed-mem">Freed mem.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#free-count">Free count</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#memory-ops">Memory ops</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#local-peak">Local peak</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#global-peak">Global peak</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#leaks">Leaks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#max-lifetime">Max lifetime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#min-lifetime">Min lifetime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#recycling-ratio">Recycling ratio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#realloc-count">Realloc count</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#realloc-sum">Realloc sum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mmap-mem">Mmap mem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mmap-count">Mmap count</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#munmap-mem">Munmap mem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#munmap-count">Munmap count</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="infos.html">Informations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced topics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/mpi.html">MPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/custom-allocs.html">Using custom allocator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/sub-part.html">Sub-part of a program</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/finstrum.html">Using -finstrument-functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/track-oom.html">Track out of memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/options.html">Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/build-options.html">Build options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/packaging.html">Packaging for distributions</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">External pointers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../external/other-tools.html">Other tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../external/other-allocators.html">Other memory allocators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../external/documentation.html">Documentation about memory</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">For developpers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../developer/debug.html">How to debug MALT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/lifecycle.html">MALT project lifecycle</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MALT</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Understanding the metrics</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/start/metrics.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="understanding-the-metrics">
+<h1>Understanding the metrics<a class="headerlink" href="#understanding-the-metrics" title="Link to this heading"></a></h1>
+<p>MALT exposes many metrics over its profiles, all the metrics will be listed and explained here.</p>
+<section id="reminder-on-memory">
+<h2>Reminder on Memory<a class="headerlink" href="#reminder-on-memory" title="Link to this heading"></a></h2>
+<p><strong>MALT</strong> as it is named (MAlloc Tracker) aimed at tracking all the <cite>malloc()</cite> of an application
+to report the memory used by itself.</p>
+<p>For a C, C++, Rust, Fortran application there is 4 ways to request memory to the system from
+the language semantic.</p>
+<p>You can find the general view here :</p>
+<figure class="align-default" id="id1">
+<a class="reference internal image-reference" href="../_images/memory-pools.png"><img alt="The 4 memory consumption parts." src="../_images/memory-pools.png" style="width: 95%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">The 4 memory consumption parts.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="global-variables">
+<h3>Global variables<a class="headerlink" href="#global-variables" title="Link to this heading"></a></h3>
+<p>The first common way is the <strong>global variables</strong>, they are allocated globaly for the run
+when spawning the process. Except if it contains specific values at start, a global
+variable is initially a <strong>virtual</strong> space allowed to be accessed in the memory and
+filled by default with <strong>zeroes</strong>.</p>
+<p>Note that is you do not access it it will use <strong>virtual memory</strong> but not <strong>physical one</strong>
+You will find in MALT the ratio between those two consumption about global variables.</p>
+<p>The amount of <strong>virtual memory</strong> is fixed at the start of the app, but the <strong>physical memory</strong>
+will increase over the run as we access the variable making it <strong>mapped in memory</strong>.</p>
+<p>This is why you can see in the time charts in <strong>increase</strong> of the <strong>physicial memory</strong> without
+making any calls to mallocs.</p>
+</section>
+<section id="thread-local-storage-tls">
+<h3>Thread Local Storage (TLS)<a class="headerlink" href="#thread-local-storage-tls" title="Link to this heading"></a></h3>
+<p>The <strong>global variables</strong> are shared between all threads. In C, C++ there is a way to use
+an annotation to make a global variable <strong>private to each thread</strong>. This is called
+a <strong>Thread Local Storage</strong> says in acronym, a <strong>TLS</strong>. In this case, the memory consumption
+of the variable will be the <strong>size</strong> of the varaible times the <strong>number of threads</strong>.</p>
+</section>
+<section id="stacks">
+<h3>Stacks<a class="headerlink" href="#stacks" title="Link to this heading"></a></h3>
+<p>The <strong>local variables</strong> inside <strong>functions</strong> are stored into the stacks which can grow as
+we go deeper in the call hierarchy mainly when we do recursion. MALT is currently unperfect
+to track this memory but tries to give some hints if you compiled you code with
+<cite>-finstrument-functions</cite> on GCC compiler.</p>
+</section>
+<section id="mmap">
+<h3>mmap<a class="headerlink" href="#mmap" title="Link to this heading"></a></h3>
+<p>This is a call you generally never use at an app programer level. <cite>mmap</cite> is the main
+function to request memory to the operating system. It by default provides a segment
+which is virtually mapped. Meaning that is consumes <strong>virtual memory</strong> but not <strong>physical memory</strong>.
+By default on a first access, (<strong>first touch</strong> we say) a <strong>physical page</strong> will be <strong>filled
+with zeroes</strong> and mapped into the segment.</p>
+<p>Notice here that the <strong>zeroes filling</strong> can imply a large overhead when the segment is large.
+This is way we should keep large allocations for a long time and not allocate / deallocate them
+intensively otherwise we can pass half of our time to just write zeroes into the memory.</p>
+<p>Note that the cost of the <strong>zeroing</strong> will not be <strong>paied</strong> at the <strong>allocation time</strong> but latter
+in the computation <strong>at the first access</strong> to the considered memory region.</p>
+<p>As a by design <strong>restriction</strong>, <cite>mapp</cite> only allow managing <strong>sizes</strong> and <strong>addresses</strong> multiple
+of then <strong>hardware page size</strong> generally <strong>4 KB</strong>. This is way it is rarely used directly the
+application codes.</p>
+<p>Remark that MALT will account the <cite>mmap</cite> calls only if they are done by the user, it will
+not count the once made by the <strong>memory allocator</strong> itself.</p>
+</section>
+<section id="malloc">
+<h3>malloc<a class="headerlink" href="#malloc" title="Link to this heading"></a></h3>
+<p>As <cite>mmap</cite> do not allow to handle any kind of sizes, <cite>malloc()</cite> has been built to fill this gap
+and by itself call <cite>mmap</cite> and handle the splitting of the segments it handles to store the
+allocations you request <strong>about any kind of sizes</strong>.</p>
+<p>This is in C what is used to allocate <strong>dynamic memory</strong> and is the main function tracked by <strong>MALT</strong>.</p>
+</section>
+</section>
+<section id="metrics">
+<h2>Metrics<a class="headerlink" href="#metrics" title="Link to this heading"></a></h2>
+<p>Here a short summary of the matrics exported by MALT :</p>
+<table class="docutils align-default" id="id2">
+<caption><span class="caption-text">Table of metrics</span><a class="headerlink" href="#id2" title="Link to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Metric</p></th>
+<th class="head"><p>Short description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Allocated mem</p></td>
+<td><p>Sum of all the mallocs and mmap done.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Allocated count</p></td>
+<td><p>Count of all calls to malloc() and mmap()</p></td>
+</tr>
+<tr class="row-even"><td><p>Min. alloc size</p></td>
+<td><p>Minimum block size allocated at this location.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Max. alloc size</p></td>
+<td><p>Maximum block size allocated at this location.</p></td>
+</tr>
+<tr class="row-even"><td><p>Freed mem.</p></td>
+<td><p>Amount of memory freed on this line.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Free count.</p></td>
+<td><p>Number of call to free() function on this line.</p></td>
+</tr>
+<tr class="row-even"><td><p>Memory ops.</p></td>
+<td><p>Total number of memory ops done on this line (malloc + mmap + free).</p></td>
+</tr>
+<tr class="row-odd"><td><p>Local peak</p></td>
+<td><p>Peak for this local line.</p></td>
+</tr>
+<tr class="row-even"><td><p>Global peak</p></td>
+<td><p>Contribution to the peak of this specific line.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Leaks</p></td>
+<td><p>Amount of memory leaking on this line.</p></td>
+</tr>
+<tr class="row-even"><td><p>Max lifetime</p></td>
+<td><p>Maximum lifetime of the blocks on this line.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Min lifetime</p></td>
+<td><p>Minimum lifetime on this line.</p></td>
+</tr>
+<tr class="row-even"><td><p>Recycling ratio</p></td>
+<td><p>Number of time this line reallocated its peak memory.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Realloc count</p></td>
+<td><p>Number of calls to realloc().</p></td>
+</tr>
+<tr class="row-even"><td><p>Realloc sum</p></td>
+<td><p>Amount of memory allocated in total by realloc().</p></td>
+</tr>
+<tr class="row-odd"><td><p>Mmap mem.</p></td>
+<td><p>Amount of memory allocated in total by mmap().</p></td>
+</tr>
+<tr class="row-even"><td><p>Mmap count</p></td>
+<td><p>Number of calls to mmap.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Munmap mem.</p></td>
+<td><p>Amount of memory freed in total by munmap().</p></td>
+</tr>
+<tr class="row-even"><td><p>Munmap count</p></td>
+<td><p>Number of calls to munmap.</p></td>
+</tr>
+</tbody>
+</table>
+<section id="allocated-memory">
+<h3>Allocated memory<a class="headerlink" href="#allocated-memory" title="Link to this heading"></a></h3>
+<p>This metric just <strong>sum up</strong> the sizes given to all <strong>mallocs</strong> and <strong>mmap</strong>.
+In other words it represent the <strong>memory volume</strong> to be managed by the
+allocator and the system.</p>
+<p>This metric give an indirect view on the time which is require to mange this
+volume of memory. Mainly if it <strong>becomes gigatbytes</strong>, it means this the code might
+take a long time to <strong>exchange</strong> its <strong>memory</strong> with the <strong>operating system</strong>.</p>
+<p>Lets take an example:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">func</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span><span class="w">          </span><span class="c1">//allocated mem. of func = 32</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span><span class="w">          </span><span class="c1">//allocated mem. of func = 64</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">64</span><span class="p">);</span><span class="w">          </span><span class="c1">//allocated mem. of func = 128</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mmap</span><span class="p">(...</span><span class="w"> </span><span class="mi">4096</span><span class="w"> </span><span class="p">...);</span><span class="w">  </span><span class="c1">//allocated mem. of func = 128 + 4096</span>
+<span class="w">    </span><span class="n">munmap</span><span class="p">(</span><span class="n">d</span><span class="p">...);</span>
+<span class="p">}</span>
+
+<span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">func</span><span class="p">();</span><span class="w">                         </span><span class="c1">//allocated mem. = 128 + 4096</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="allocated-count">
+<h3>Allocated count<a class="headerlink" href="#allocated-count" title="Link to this heading"></a></h3>
+<p>The numer of memory allocation for the given line. Accounting the <strong>malloc</strong> and <strong>mmap</strong>.
+It show the potential oberhead due to <strong>malloc</strong> itself.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">func</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span><span class="w">          </span><span class="c1">//allocated count of func  = 1</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span><span class="w">          </span><span class="c1">//allocated count of func  = 2</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">64</span><span class="p">);</span><span class="w">          </span><span class="c1">//allocated count of func  = 3</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mmap</span><span class="p">(...</span><span class="w"> </span><span class="mi">4096</span><span class="w"> </span><span class="p">...);</span><span class="w">  </span><span class="c1">//allocated count of func  = 4</span>
+<span class="w">    </span><span class="n">munmap</span><span class="p">(</span><span class="n">d</span><span class="p">...);</span>
+<span class="p">}</span>
+
+<span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">func</span><span class="p">();</span><span class="w">                         </span><span class="c1">//allocated count = 4</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="min-alloc-size">
+<h3>Min. alloc size<a class="headerlink" href="#min-alloc-size" title="Link to this heading"></a></h3>
+<p>The minimum size passed as parameter of <strong>malloc</strong> or <strong>mmap</strong> on the given site.
+It permits to find the small memory allocations.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">func</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span><span class="w">          </span><span class="c1">//min. alloc size of func = 32</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span><span class="w">          </span><span class="c1">//min. alloc size of func = 32</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span><span class="w">          </span><span class="c1">//min. alloc size of func = 16</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mmap</span><span class="p">(...</span><span class="w"> </span><span class="mi">4096</span><span class="w"> </span><span class="p">...);</span><span class="w">  </span><span class="c1">//min. alloc size of func = 16</span>
+<span class="w">    </span><span class="n">munmap</span><span class="p">(</span><span class="n">d</span><span class="p">...);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">func</span><span class="p">();</span><span class="w">                         </span><span class="c1">//min. alloc size = 16</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="max-alloc-size">
+<h3>Max. alloc size<a class="headerlink" href="#max-alloc-size" title="Link to this heading"></a></h3>
+<p>Maximum size passed to <strong>malloc</strong> or <strong>mmap</strong> on the given line.
+It permits to find the large memory allocations in the application.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">func</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span><span class="w">          </span><span class="c1">//max. alloc size of func = 32</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span><span class="w">          </span><span class="c1">//max. alloc size of func = 32</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span><span class="w">          </span><span class="c1">//max. alloc size of func = 32</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mmap</span><span class="p">(...</span><span class="w"> </span><span class="mi">4096</span><span class="w"> </span><span class="p">...);</span><span class="w">  </span><span class="c1">//max. alloc size of func = 4096</span>
+<span class="w">    </span><span class="n">munmap</span><span class="p">(</span><span class="n">d</span><span class="p">...);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">func</span><span class="p">();</span><span class="w">                         </span><span class="c1">//max. alloc size = 4096</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="freed-mem">
+<h3>Freed mem.<a class="headerlink" href="#freed-mem" title="Link to this heading"></a></h3>
+<p>Amount of memory freed on the given line by <cite>free</cite> or <cite>munmap</cite>. It is computed by summing the size
+of all the blocks freed on the given location.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">func</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">b</span><span class="p">);</span><span class="w">                        </span><span class="c1">//freed mem. of func = 32</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">c</span><span class="p">);</span><span class="w">                        </span><span class="c1">//freed mem. of func = 48</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">a</span><span class="p">);</span><span class="w">                        </span><span class="c1">//freed mem. of func = 80</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mmap</span><span class="p">(...</span><span class="w"> </span><span class="mi">4096</span><span class="w"> </span><span class="p">...);</span>
+<span class="w">    </span><span class="n">munmap</span><span class="p">(</span><span class="n">d</span><span class="p">...);</span><span class="w">                   </span><span class="c1">//freed mem. of func = 80 + 4096</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">func</span><span class="p">();</span><span class="w">                         </span><span class="c1">//freed count. = 80 + 4096</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="free-count">
+<h3>Free count<a class="headerlink" href="#free-count" title="Link to this heading"></a></h3>
+<p>Number of calls to <strong>free</strong> and <strong>munmap</strong> functions.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">func</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">b</span><span class="p">);</span><span class="w">                        </span><span class="c1">//freed count. of func = 1</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">c</span><span class="p">);</span><span class="w">                        </span><span class="c1">//freed count. of func = 2</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">a</span><span class="p">);</span><span class="w">                        </span><span class="c1">//freed count. of func = 3</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mmap</span><span class="p">(...</span><span class="w"> </span><span class="mi">4096</span><span class="w"> </span><span class="p">...);</span>
+<span class="w">    </span><span class="n">munmap</span><span class="p">(</span><span class="n">d</span><span class="p">...);</span><span class="w">                   </span><span class="c1">//freed count. of func = 4</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">func</span><span class="p">();</span><span class="w">                         </span><span class="c1">//freed count. = 4</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="memory-ops">
+<h3>Memory ops<a class="headerlink" href="#memory-ops" title="Link to this heading"></a></h3>
+<p>Count the number of memory operations done on a given location.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">func</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span><span class="w">          </span><span class="c1">// memory ops. of func = 1</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span><span class="w">          </span><span class="c1">// memory ops. of func = 2</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">b</span><span class="p">);</span><span class="w">                        </span><span class="c1">// memory ops. of func = 3</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span><span class="w">          </span><span class="c1">// memory ops. of func = 4</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">c</span><span class="p">);</span><span class="w">                        </span><span class="c1">// memory ops. of func = 5</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">a</span><span class="p">);</span><span class="w">                        </span><span class="c1">// memory ops. of func = 6</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mmap</span><span class="p">(...</span><span class="w"> </span><span class="mi">4096</span><span class="w"> </span><span class="p">...);</span><span class="w">  </span><span class="c1">// memory ops. of func = 7</span>
+<span class="w">    </span><span class="n">munmap</span><span class="p">(</span><span class="n">d</span><span class="p">...);</span><span class="w">                   </span><span class="c1">// memory ops. of func = 8</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">func</span><span class="p">();</span><span class="w">                         </span><span class="c1">// memory ops. of func = 8</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="local-peak">
+<h3>Local peak<a class="headerlink" href="#local-peak" title="Link to this heading"></a></h3>
+<p>This is the memory consumption peak for a given code location. It takes
+in account all the memory allocation done on this particular location.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">func</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span><span class="w">          </span><span class="c1">// local peak of func = 32</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span><span class="w">          </span><span class="c1">// local peak of func = 64</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span><span class="w">          </span><span class="c1">// local peak of func = 64</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mmap</span><span class="p">(...</span><span class="w"> </span><span class="mi">4096</span><span class="w"> </span><span class="p">...);</span><span class="w">  </span><span class="c1">// local peak of func = 32 + 4096</span>
+<span class="w">    </span><span class="n">munmap</span><span class="p">(</span><span class="n">d</span><span class="p">...);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">256</span><span class="p">);</span>
+<span class="w">    </span><span class="n">func</span><span class="p">();</span><span class="w">                         </span><span class="c1">// local peak = 48 + 4096</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="global-peak">
+<h3>Global peak<a class="headerlink" href="#global-peak" title="Link to this heading"></a></h3>
+<p>This metrics gives the <strong>memory consumption</strong> of the local site <strong>at the peak time</strong>.</p>
+<p>Notice it can arise at a <strong>different moment</strong> than the <strong>local peak</strong> because the global
+peak does not necesserily arise at the time the local peak arise.</p>
+</section>
+<section id="leaks">
+<h3>Leaks<a class="headerlink" href="#leaks" title="Link to this heading"></a></h3>
+<p>This is the <strong>mallocs</strong> which are not paired with a <strong>free</strong> or an <strong>mmap</strong> not paried
+or partially paired with an <strong>munmap</strong>.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">func</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span><span class="w">          </span><span class="c1">// leak = 32</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mmap</span><span class="p">(...</span><span class="w"> </span><span class="mi">4096</span><span class="w"> </span><span class="p">...);</span>
+<span class="w">    </span><span class="n">munmap</span><span class="p">(</span><span class="n">d</span><span class="p">...);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">256</span><span class="p">);</span>
+<span class="w">    </span><span class="n">func</span><span class="p">();</span><span class="w">                         </span><span class="c1">// leak = 32</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="max-lifetime">
+<h3>Max lifetime<a class="headerlink" href="#max-lifetime" title="Link to this heading"></a></h3>
+<p>It takes the maximal <strong>delay</strong> between a <strong>malloc</strong> and its <strong>paired free</strong>
+on the given location.</p>
+<p>If this value is too low and there is a large amount of allocation done at the
+given location it means that there is possibly a performance issue.</p>
+</section>
+<section id="min-lifetime">
+<h3>Min lifetime<a class="headerlink" href="#min-lifetime" title="Link to this heading"></a></h3>
+<p>It takes the minimal <strong>delay</strong> between a <strong>malloc</strong> and its <strong>paired free</strong>
+on the given location.</p>
+</section>
+<section id="recycling-ratio">
+<h3>Recycling ratio<a class="headerlink" href="#recycling-ratio" title="Link to this heading"></a></h3>
+<p>It compute the ratio of the <strong>allocatd volume</strong> over the <strong>local peak</strong>.
+It give a rougth estimation of the number of time the function reallocated
+its peak memory.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">func</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span><span class="w">          </span><span class="c1">// recyclong ratio = 1</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">1000</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span><span class="w">      </span><span class="c1">// recyclong ratio = 1000</span>
+<span class="w">        </span><span class="n">free</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">256</span><span class="p">);</span>
+<span class="w">    </span><span class="n">func</span><span class="p">();</span><span class="w">                         </span><span class="c1">// recyclong ratio = 501 ((32 + 16*1000) / 32)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="realloc-count">
+<h3>Realloc count<a class="headerlink" href="#realloc-count" title="Link to this heading"></a></h3>
+<p>Count the number of <cite>realloc</cite> done at this location.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">func</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">realloc</span><span class="p">(</span><span class="n">nullptr</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="p">);</span><span class="w">       </span><span class="c1">// realloc count of func = 1</span>
+<span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">realloc</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="p">);</span><span class="w">                    </span><span class="c1">// realloc count of func = 2</span>
+<span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">realloc</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">);</span><span class="w">                    </span><span class="c1">// realloc count of func = 3</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">func</span><span class="p">();</span><span class="w">                                </span><span class="c1">// realloc count of func = 3</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="realloc-sum">
+<h3>Realloc sum<a class="headerlink" href="#realloc-sum" title="Link to this heading"></a></h3>
+<p>Sum the memory delta of each <cite>realloc</cite> done at the given location.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">func</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">realloc</span><span class="p">(</span><span class="n">nullptr</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span><span class="w">       </span><span class="c1">// realloc sum of func = 10</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">realloc</span><span class="p">(</span><span class="n">nullptr</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="p">);</span><span class="w">       </span><span class="c1">// realloc sum of func = 42</span>
+<span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">realloc</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="p">);</span><span class="w">                    </span><span class="c1">// realloc sum of func = 74</span>
+<span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">realloc</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="p">);</span><span class="w">                    </span><span class="c1">// realloc sum of func = 74</span>
+<span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">realloc</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">);</span><span class="w">                    </span><span class="c1">// realloc sum of func = 26</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">func</span><span class="p">();</span><span class="w">                                </span><span class="c1">// realloc sum of func = 26</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="mmap-mem">
+<h3>Mmap mem<a class="headerlink" href="#mmap-mem" title="Link to this heading"></a></h3>
+<p>Sum the memory allocated by each <cite>mmap</cite> done at the given location.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">func</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mmap</span><span class="p">(....</span><span class="w"> </span><span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="w"> </span><span class="p">....);</span><span class="w">       </span><span class="c1">// mmap mem of func = 1 MB</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mremap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="p">....</span><span class="w"> </span><span class="mi">2048</span><span class="o">*</span><span class="mi">1024</span><span class="w"> </span><span class="p">....);</span><span class="w">  </span><span class="c1">// mmap mem of func = 2 MB</span>
+<span class="w">    </span><span class="n">munmap</span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="p">,</span><span class="w"> </span><span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="p">);</span><span class="w">           </span><span class="c1">// mmap mem of func = 2 MB</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mremap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="p">....</span><span class="w"> </span><span class="mi">2048</span><span class="o">*</span><span class="mi">1024</span><span class="w"> </span><span class="p">....);</span><span class="w">  </span><span class="c1">// mmap mem of func = 3 MB</span>
+<span class="w">    </span><span class="n">munmap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">2048</span><span class="o">*</span><span class="mi">1024</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">func</span><span class="p">();</span><span class="w">                                     </span><span class="c1">// mmap mem = 3 MB</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="mmap-count">
+<h3>Mmap count<a class="headerlink" href="#mmap-count" title="Link to this heading"></a></h3>
+<p>Count the number of <cite>mmap</cite> done at the given location.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">func</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mmap</span><span class="p">(....</span><span class="w"> </span><span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="w"> </span><span class="p">....);</span><span class="w">       </span><span class="c1">// mmap count of func = 1</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mremap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="p">....</span><span class="w"> </span><span class="mi">2048</span><span class="o">*</span><span class="mi">1024</span><span class="w"> </span><span class="p">....);</span><span class="w">  </span><span class="c1">// mmap count of func = 2</span>
+<span class="w">    </span><span class="n">munmap</span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="p">,</span><span class="w"> </span><span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mremap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="p">....</span><span class="w"> </span><span class="mi">2048</span><span class="o">*</span><span class="mi">1024</span><span class="w"> </span><span class="p">....);</span><span class="w">  </span><span class="c1">// mmap count of func = 3</span>
+<span class="w">    </span><span class="n">munmap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">2048</span><span class="o">*</span><span class="mi">1024</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">func</span><span class="p">();</span><span class="w">                                     </span><span class="c1">// mmap count = 3</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="munmap-mem">
+<h3>Munmap mem<a class="headerlink" href="#munmap-mem" title="Link to this heading"></a></h3>
+<p>Sum the memory freed by each <cite>munmap</cite> done at the given location.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">func</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mmap</span><span class="p">(....</span><span class="w"> </span><span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="w"> </span><span class="p">....);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mremap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="p">....</span><span class="w"> </span><span class="mi">2048</span><span class="o">*</span><span class="mi">1024</span><span class="w"> </span><span class="p">....);</span>
+<span class="w">    </span><span class="n">munmap</span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="p">,</span><span class="w"> </span><span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="p">);</span><span class="w">           </span><span class="c1">// munmap mem of func = 1 MB</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mremap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="p">....</span><span class="w"> </span><span class="mi">2048</span><span class="o">*</span><span class="mi">1024</span><span class="w"> </span><span class="p">....);</span>
+<span class="w">    </span><span class="n">munmap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">2048</span><span class="o">*</span><span class="mi">1024</span><span class="p">);</span><span class="w">                       </span><span class="c1">// munmap mem of func = 3 MB</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">func</span><span class="p">();</span><span class="w">                                    </span><span class="c1">// munmap mem = 3 MB</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="munmap-count">
+<h3>Munmap count<a class="headerlink" href="#munmap-count" title="Link to this heading"></a></h3>
+<p>Count the number of <cite>munmap</cite> done at the given location.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">func</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mmap</span><span class="p">(....</span><span class="w"> </span><span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="w"> </span><span class="p">....);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mremap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="p">....</span><span class="w"> </span><span class="mi">2048</span><span class="o">*</span><span class="mi">1024</span><span class="w"> </span><span class="p">....);</span>
+<span class="w">    </span><span class="n">munmap</span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="p">,</span><span class="w"> </span><span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="p">);</span><span class="w">           </span><span class="c1">// munmap count of func = 1</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mremap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="p">....</span><span class="w"> </span><span class="mi">2048</span><span class="o">*</span><span class="mi">1024</span><span class="w"> </span><span class="p">....);</span>
+<span class="w">    </span><span class="n">munmap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">2048</span><span class="o">*</span><span class="mi">1024</span><span class="p">);</span><span class="w">                       </span><span class="c1">// munmap count of func = 2</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">func</span><span class="p">();</span><span class="w">                                    </span><span class="c1">// munmap count = 2</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="static-report.html" class="btn btn-neutral float-left" title="Static report" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="infos.html" class="btn btn-neutral float-right" title="Informations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Sébastien Valat.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

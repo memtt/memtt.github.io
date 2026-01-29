@@ -1,0 +1,206 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Using custom allocator &mdash; MALT 1.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/./custom.css?v=f0082309" />
+
+  
+    <link rel="shortcut icon" href="../_static/ico.png"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=72d88caf"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Sub-part of a program" href="sub-part.html" />
+    <link rel="prev" title="MPI" href="mpi.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            MALT
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../start/dependencies.html">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../start/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../start/basic-usage.html">Basic usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../start/static-report.html">Static report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../start/metrics.html">Understanding the metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../start/infos.html">Informations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced topics</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="mpi.html">MPI</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Using custom allocator</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#standard-api-with-prefix">Standard API with prefix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#non-standard-api">Non standard API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sub-part.html">Sub-part of a program</a></li>
+<li class="toctree-l1"><a class="reference internal" href="finstrum.html">Using -finstrument-functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="track-oom.html">Track out of memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="options.html">Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build-options.html">Build options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="packaging.html">Packaging for distributions</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">External pointers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../external/other-tools.html">Other tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../external/other-allocators.html">Other memory allocators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../external/documentation.html">Documentation about memory</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">For developpers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../developer/debug.html">How to debug MALT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/lifecycle.html">MALT project lifecycle</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MALT</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Using custom allocator</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/advanced/custom-allocs.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="using-custom-allocator">
+<h1>Using custom allocator<a class="headerlink" href="#using-custom-allocator" title="Link to this heading"></a></h1>
+<p>In some cases, you application might be using a <strong>custom memory allocator</strong>. Here there
+is two cases :</p>
+<p>1. The application is replacing the default allocator by overriding the officiel <cite>malloc</cite>, <cite>free</cite>…
+In this case, nothing to do as long as the replacement allocator is provided as a <strong>dynamic library</strong>
+so <strong>malt</strong> can be <strong>hooked in</strong>.
+2. The applicatoin use the <strong>standard allocator</strong> for most of the code but use one or several <strong>custom one</strong>
+for <strong>some parts</strong>.</p>
+<p>In the second case, you need to perform some dedicated actions.</p>
+<section id="standard-api-with-prefix">
+<h2>Standard API with prefix<a class="headerlink" href="#standard-api-with-prefix" title="Link to this heading"></a></h2>
+<p>If your memory allocator natively just export the standard memory allocator API with just a <strong>prefix</strong>
+in from of all function names of the <strong>API</strong>, then you can simply proceed by :</p>
+<p>Lets consider the case where you have the given correspondances :</p>
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-text">Table of metrics</span><a class="headerlink" href="#id1" title="Link to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Custom API</p></th>
+<th class="head"><p>Corresponding standard API</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>je_malloc</cite></p></td>
+<td><p><cite>malloc</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>je_calloc</cite></p></td>
+<td><p><cite>calloc</cite></p></td>
+</tr>
+<tr class="row-even"><td><p><cite>je_free</cite></p></td>
+<td><p><cite>free</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>je_realloc</cite></p></td>
+<td><p><cite>realloc</cite></p></td>
+</tr>
+<tr class="row-even"><td><p><cite>je_memalign</cite></p></td>
+<td><p><cite>memalign</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>je_posix_memalign</cite></p></td>
+<td><p><cite>posix_memalign</cite></p></td>
+</tr>
+<tr class="row-even"><td><p><cite>je_aligned_alloc</cite></p></td>
+<td><p><cite>aligned_alloc</cite></p></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># wrapping some custom allocator</span>
+malt<span class="w"> </span>--wrap-prefix<span class="w"> </span>je_
+
+<span class="c1"># wrapping several custom allocators</span>
+malt<span class="w"> </span>--wrap-prefix<span class="w"> </span>je_<span class="w"> </span>--wrap-prefix<span class="w"> </span>mi
+</pre></div>
+</div>
+<p><strong>Note</strong> it will work only if the given memory allocators are build as a <strong>shared library</strong> outside
+of the application otherwise there is no ways to be <strong>hooked in</strong> from outside by overriding the symbols.</p>
+</section>
+<section id="non-standard-api">
+<h2>Non standard API<a class="headerlink" href="#non-standard-api" title="Link to this heading"></a></h2>
+<p>If for some reason your API does not provide exacly the list of functions listed in previous
+function, you need to list the wrappers one by one.</p>
+<p><strong>Note</strong> it still requires that each function follow the same API for the related symbols.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># wrapping only some part of the allocator because not all provided</span>
+malt<span class="w"> </span>--wrap<span class="w"> </span>malloc:je_malloc,free:je_free
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mpi.html" class="btn btn-neutral float-left" title="MPI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sub-part.html" class="btn btn-neutral float-right" title="Sub-part of a program" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Sébastien Valat.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

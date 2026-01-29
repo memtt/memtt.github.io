@@ -102,7 +102,24 @@ you can alias some paths to make it transparent to the GUI and be able to find y
 source code. The format is <em>src_path1:dest_path1,src_path2,dest_path2</em>. The easiest use
 is to override the root directory of your project.</dd>
 <dt>
-<code>p</code>, <code>--port</code>
+<code>-s</code>, <code>--static</code>
+</dt>
+<dd>Dump the webview in static mode, with only the pages supported by this static mode.
+It will also copy the profile inside the given directory, see <code>--embed-profile</code> to
+contrôle this last behavior.</dd>
+<dt>
+<code>-S</code>, <code>--static-summary</code>
+</dt>
+<dd>Dump the webview in static mode, with only the summary page in this case.
+It will also copy the profile inside the given directory, see <code>--embed-profile</code> to
+contrôle this last behavior.</dd>
+<dt>
+<code>-e</code>, <code>--embed-profile</code>
+</dt>
+<dd>Define the mode to apply to copy the profile in the static rendering of the webview.
+The argument can be either : <code>xz</code>, <code>json</code> or <code>none</code>.</dd>
+<dt>
+<code>-p</code>, <code>--port</code>
 </dt>
 <dd>Force to use another port than default 8080.</dd>
 <dt><code>version</code></dt>
@@ -146,7 +163,7 @@ to other users of the cluster by using a unix socket file in place of the port.<
 
 <h2 id="VERSION">VERSION</h2>
 
-<p>This is the manpage of MALT version 1.5.0.</p>
+<p>This is the manpage of MALT version 1.6.0.</p>
 
 <h2 id="SEE-ALSO">SEE ALSO</h2>
 

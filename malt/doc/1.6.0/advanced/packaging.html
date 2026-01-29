@@ -1,0 +1,198 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Packaging for distributions &mdash; MALT 1.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/./custom.css?v=f0082309" />
+
+  
+    <link rel="shortcut icon" href="../_static/ico.png"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=72d88caf"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Other tools" href="../external/other-tools.html" />
+    <link rel="prev" title="Build options" href="build-options.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            MALT
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../start/dependencies.html">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../start/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../start/basic-usage.html">Basic usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../start/static-report.html">Static report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../start/metrics.html">Understanding the metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../start/infos.html">Informations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced topics</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="mpi.html">MPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom-allocs.html">Using custom allocator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sub-part.html">Sub-part of a program</a></li>
+<li class="toctree-l1"><a class="reference internal" href="finstrum.html">Using -finstrument-functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="track-oom.html">Track out of memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="options.html">Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build-options.html">Build options</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Packaging for distributions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#archive-from-the-git-sources">Archive from the git sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gentoo">Gentoo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rpm-fedora-and-others">RPM : Fedora and others</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#apt-debian-and-others">APT : Debian and others</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">External pointers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../external/other-tools.html">Other tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../external/other-allocators.html">Other memory allocators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../external/documentation.html">Documentation about memory</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">For developpers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../developer/debug.html">How to debug MALT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/lifecycle.html">MALT project lifecycle</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MALT</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Packaging for distributions</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/advanced/packaging.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="packaging-for-distributions">
+<span id="packaging"></span><h1>Packaging for distributions<a class="headerlink" href="#packaging-for-distributions" title="Link to this heading"></a></h1>
+<p>MALT provide the necessary script to generate the packages for common distributions.
+You will find here the procedure to follow to build them.</p>
+<section id="archive-from-the-git-sources">
+<h2>Archive from the git sources<a class="headerlink" href="#archive-from-the-git-sources" title="Link to this heading"></a></h2>
+<p>Before following the rest of this document you need either to:</p>
+<ul class="simple">
+<li><p>Download an <strong>official release</strong> tarball.</p></li>
+<li><p><strong>Generate</strong> the release tarball.</p></li>
+</ul>
+<p>To generate from the <strong>git sources</strong> :</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./dev/dev.py<span class="w"> </span>archive<span class="w"> </span>--commit<span class="w"> </span>v1.6.0<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.6.0<span class="w"> </span>--no-hash
+</pre></div>
+</div>
+</section>
+<section id="gentoo">
+<h2>Gentoo<a class="headerlink" href="#gentoo" title="Link to this heading"></a></h2>
+<p>On Gentoo you can directly use the Overlay provided on the web : <a class="reference external" href="https://github.com/memtt/gentoo-memtt-overlay">https://github.com/memtt/gentoo-memtt-overlay</a></p>
+<p>The usage procedure is given here :</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>eselect<span class="w"> </span>repository<span class="w"> </span>add<span class="w"> </span>memtt<span class="w"> </span>git<span class="w"> </span>https://github.com/memtt/gentoo-memtt-overlay.git
+sudo<span class="w"> </span>eselect<span class="w"> </span>repository<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>memtt
+sudo<span class="w"> </span>emerge<span class="w"> </span>-a<span class="w"> </span>malt
+</pre></div>
+</div>
+</section>
+<section id="rpm-fedora-and-others">
+<h2>RPM : Fedora and others<a class="headerlink" href="#rpm-fedora-and-others" title="Link to this heading"></a></h2>
+<p>If you want to build your package for Fedora or related RPM based distribution,
+you can follow the given commands.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extract the packging dir if you are not in git sources</span>
+tar<span class="w"> </span>--strip-components<span class="w"> </span><span class="m">1</span><span class="w"> </span>-xvf<span class="w"> </span>malt-1.6.0.tar.bz2<span class="w"> </span>malt-1.6.0/packaging/fedora
+
+<span class="c1"># build the podman image</span>
+podman<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>malt/fedora-rpmbuild<span class="w"> </span>-f<span class="w"> </span>packaging/fedora/Dockerfile
+
+<span class="c1"># Call the script inside docker</span>
+podman<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-ti<span class="w"> </span>-v<span class="w"> </span>.:/sources:rw<span class="w"> </span>malt/fedora-rpmbuild<span class="w"> </span>/sources/packaging/fedora/build.sh<span class="w"> </span><span class="m">1</span>.6.0
+</pre></div>
+</div>
+</section>
+<section id="apt-debian-and-others">
+<h2>APT : Debian and others<a class="headerlink" href="#apt-debian-and-others" title="Link to this heading"></a></h2>
+<p>If you want to build your package for Debian, Ubuntu or related APT based distributions,
+you can follow the given commands.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extract the packging dir if you are not in git sources</span>
+tar<span class="w"> </span>--strip-components<span class="w"> </span><span class="m">1</span><span class="w"> </span>-xvf<span class="w"> </span>malt-1.6.0.tar.bz2<span class="w"> </span>malt-1.6.0/packaging/debian
+
+<span class="c1"># build the podman image</span>
+podman<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>malt/debian-debbuild<span class="w"> </span>-f<span class="w"> </span>packaging/debian/Dockerfile
+
+<span class="c1"># Call the script inside docker</span>
+podman<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-ti<span class="w"> </span>-v<span class="w"> </span>.:/sources:rw<span class="w"> </span>malt/debian-debbuild<span class="w"> </span>/sources/packaging/debian/build.sh<span class="w"> </span><span class="m">1</span>.6.0
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="build-options.html" class="btn btn-neutral float-left" title="Build options" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../external/other-tools.html" class="btn btn-neutral float-right" title="Other tools" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Sébastien Valat.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
