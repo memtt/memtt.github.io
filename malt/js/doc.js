@@ -25,4 +25,16 @@ function setManpage(name)
 	});
 }
 
+function setDocumentation()
+{
+	$.ajax({
+		url : './doc/doc-index.html',
+		type : 'GET',
+		dataType : 'html',
+		success : function(html, statut){
+			$(".doc-md").html(html);
+		}
+	});
+}
+
 $(document).ready(setReadmePage);
