@@ -175,6 +175,9 @@ associativity=8
 [mpi]
 usrRank=false
 rankVar=auto
+
+[emulate]
+numa=-1
 </code></pre>
 
 <p>The <code>output</code> section support :</p>
@@ -263,6 +266,10 @@ or MPI.</dd>
   variable name or force the value with a numeric value.</dd>
 </dl>
 
+<p>The <code>emulate</code> section support:
+ * <code>numa</code>: Emulate a numa server by considering X numa node over the available cores which will be
+  spreaded over the X numa domains.</p>
+
 <h2 id="ENVIRONMENT">ENVIRONMENT</h2>
 
 <p>In that case you can setup some environment variables to configure NUMAPROF :</p>
@@ -276,7 +283,7 @@ or MPI.</dd>
 
 <h2 id="VERSION">VERSION</h2>
 
-<p>This is the manpage of NUMAPROF version 1.1.5.</p>
+<p>This is the manpage of NUMAPROF version 1.1.7.</p>
 
 <h2 id="SEE-ALSO">SEE ALSO</h2>
 
@@ -284,7 +291,7 @@ or MPI.</dd>
 
   <ol class='man-decor man-foot man foot'>
     <li class='tl'></li>
-    <li class='tc'>June 2023</li>
+    <li class='tc'>June 2026</li>
     <li class='tr'>numaprof(1)</li>
   </ol>
 

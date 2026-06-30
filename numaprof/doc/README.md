@@ -174,6 +174,9 @@ associativity=8
 [mpi]
 useRank=false
 rankVar=auto
+
+[emulate]
+numa=-1
 ```
 
 On huge application
@@ -230,6 +233,19 @@ the standard way to override config file options via command line (or provide a 
 numaprof-pintool --cache L1 -o cache:size=32K -o cache:associativity=8 {YOUR_APP}
 ```
 
+Not having a NUMA server for dev
+--------------------------------
+
+If you want to test your application about NUMA without having a NUMA server under your hand,
+you can use the option `emulate:numa` to make numaprof runnning as it would run on a NUMA
+server.
+
+In the option, give the desired number of NUMA nodes to emulated. It should be a multiple
+of the core count which will be distributed over the X requested NUMA domains.
+
+Notice that in this case NUMAPROF provide a purely theoritical view not fetching any
+infos from the OS about NUMA as it request for a normal run. 
+
 Pointers:
 ---------
 
@@ -242,6 +258,17 @@ Numaprof is distributed under CeCILL-C licence which is LGPL compatible.
 Take care, NUMAPROF currently strongly depend on Intel Pintool which is free only for non commercial use.
 
 I would like to make a port to DynamoRIO to avoid this, if someone want to help !.
+
+To cite
+-------
+
+If you publish about NUMAPROF, you cite this research paper as reference :
+
+```
+Valat, S., Bouizi, O. (2019). NUMAPROF, A NUMA Memory Profiler. In: Mencagli, G., et al.
+Euro-Par 2018: Parallel Processing Workshops. Euro-Par 2018. Lecture Notes in Computer
+Science(), vol 11339. Springer, Cham. https://doi.org/10.1007/978-3-030-10549-5_13
+```
 
 Discussion
 ----------
