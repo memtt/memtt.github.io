@@ -1,0 +1,184 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sub-part of a program &mdash; MALT 1.6.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/./custom.css?v=f0082309" />
+
+  
+    <link rel="shortcut icon" href="../_static/ico.png"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=452006c5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Using -finstrument-functions" href="finstrum.html" />
+    <link rel="prev" title="Using custom allocator" href="custom-allocs.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            MALT
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../start/dependencies.html">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../start/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../start/basic-usage.html">Basic usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../start/static-report.html">Static report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../start/metrics.html">Understanding the metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../start/infos.html">Informations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced topics</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="mpi.html">MPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom-allocs.html">Using custom allocator</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Sub-part of a program</a></li>
+<li class="toctree-l1"><a class="reference internal" href="finstrum.html">Using -finstrument-functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="track-oom.html">Track out of memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="options.html">Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build-options.html">Build options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="packaging.html">Packaging for distributions</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">External pointers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../external/other-tools.html">Other tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../external/other-allocators.html">Other memory allocators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../external/documentation.html">Documentation about memory</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">For developpers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../developer/debug.html">How to debug MALT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/lifecycle.html">MALT project lifecycle</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MALT</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Sub-part of a program</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/advanced/sub-part.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="sub-part-of-a-program">
+<h1>Sub-part of a program<a class="headerlink" href="#sub-part-of-a-program" title="Link to this heading"></a></h1>
+<p>If you run on a really big program doing millions of allocation you might get a big overhead, and maybe
+you are just interested in a sub-part of the program. You can do it by including <cite>malt/malt.h</cite> in
+your files and use <cite>malt_enable()</cite> an <cite>malt_disable()</cite> to controle MALT on each thread. It is also a nice
+way to detect leaks of sub-parts of your code.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;malt/malt.h&gt;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">malt_disable</span><span class="p">();</span>
+<span class="w">    </span><span class="c1">//ignored</span>
+<span class="w">    </span><span class="n">malloc</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">malt_enable</span><span class="p">();</span>
+<span class="w">    </span><span class="c1">//tracked</span>
+<span class="w">    </span><span class="n">malloc</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You will need to link the <cite>libmalt-controler.so</cite> to get the default fake symbols when not using MALT.
+You can also just provide the two empty functions in your own dynamic library (not static).</p>
+<p>If you have some allocation not under your control before your first call you can disable MALT by default
+on threads using the <cite>filter:enabled</cite> option, then enable it by hand.</p>
+<p>If you want to change the initial status (make it disabled at start), you can simply redefine in your program
+the function :</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;malt/malt.h&gt;</span>
+
+<span class="c1">//malt will be disabled at start</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">malt_init_status</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">//perform some costly code</span>
+
+<span class="w">    </span><span class="n">malt_enable</span><span class="p">();</span>
+<span class="w">    </span><span class="c1">//perform some costly code you want to analyse</span>
+<span class="w">    </span><span class="n">malt_disable</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">//ok</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">EXIT_SUCCESS</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="custom-allocs.html" class="btn btn-neutral float-left" title="Using custom allocator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="finstrum.html" class="btn btn-neutral float-right" title="Using -finstrument-functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Sébastien Valat.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
